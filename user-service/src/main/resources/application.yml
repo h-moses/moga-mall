@@ -1,0 +1,46 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: moga-user-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moga-mall-user-db?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false
+    druid:
+      min-idle: 1
+      max-wait: -1
+      max-active: 8
+    username: root
+    password: 802324
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+  devtools:
+    livereload:
+      port: 35729
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+  rabbitmq:
+    username: admin
+    password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"

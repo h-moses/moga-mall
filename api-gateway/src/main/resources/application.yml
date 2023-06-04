@@ -1,0 +1,48 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: moga-api-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+#        - id: service-order
+#          uri: lb://service-order
+#          predicates:
+#            - Path=/api/order/**
+#          filters:
+#            - StripPrefix=1
+  devtools:
+    livereload:
+      port: 35734
+  rabbitmq:
+    username: admin
+    password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+
+logging:
+  level:
+    org.springframework:cloud.gateway: debug
+
+jwt:
+  secret: "802324"
+  expiration: 86400
