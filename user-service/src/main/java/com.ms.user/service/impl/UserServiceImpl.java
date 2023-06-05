@@ -12,6 +12,7 @@ import com.ms.common.exception.SysException;
 import com.ms.user.entity.User;
 import com.ms.user.mapper.UserMapper;
 import com.ms.user.service.IUserService;
+import com.ms.user.utils.TokenUtils;
 import com.ms.user.vo.UserRegisterParamVo;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.BeanUtils;
@@ -75,13 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } else if (!user.getPassword().equals(SecureUtil.md5(password))) {
             return BizStatusCode.PASSWORD_INCORRECT;
         } else {
-            Map<String, Object> payload = new HashMap<String, Object>() {
-                {
-                    put("id", user.getId());
-                    put("username", user.getUsername());
-                }
-            };
-            return JWTUtil.createToken(payload, JWT_KEY.getBytes());
+            return TokenUtils.generateTokenPair(user);
         }
     }
 }
