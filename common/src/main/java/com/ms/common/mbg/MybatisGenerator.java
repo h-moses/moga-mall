@@ -1,4 +1,4 @@
-package com.ms.gateway.mbg;
+package com.ms.common.mbg;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;

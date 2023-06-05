@@ -1,4 +1,4 @@
-package com.ms.gateway.enums;
+package com.ms.common.enums;
 
 public enum OrderStatus {
     CREATED(0, "已创建"),

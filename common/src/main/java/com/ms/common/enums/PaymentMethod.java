@@ -1,4 +1,4 @@
-package com.ms.gateway.enums;
+package com.ms.common.enums;
 
 public enum PaymentMethod {
 

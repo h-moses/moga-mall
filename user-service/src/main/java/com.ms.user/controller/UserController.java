@@ -1,7 +1,7 @@
 package com.ms.user.controller;
 
 
-import com.ms.gateway.api.Response;
+import com.ms.common.api.Response;
 import com.ms.user.service.impl.UserServiceImpl;
 import com.ms.user.vo.UpdateUserInfoParamVo;
 import com.ms.user.vo.UserRegisterParamVo;

@@ -1,4 +1,4 @@
-package com.ms.gateway.enums;
+package com.ms.common.enums;
 
 /*
 * 业务状态码

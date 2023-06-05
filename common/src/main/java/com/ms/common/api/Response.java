@@ -1,6 +1,6 @@
-package com.ms.gateway.api;
+package com.ms.common.api;
 
-import com.ms.gateway.enums.BizStatusCode;
+import com.ms.common.enums.BizStatusCode;
 
 public class Response<T> {
 

@@ -1,6 +1,6 @@
-package com.ms.gateway.exception;
+package com.ms.common.exception;
 
-import com.ms.gateway.api.Response;
+import com.ms.common.api.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;

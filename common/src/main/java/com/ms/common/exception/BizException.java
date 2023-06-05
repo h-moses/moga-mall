@@ -1,13 +1,13 @@
-package com.ms.gateway.enums;
+package com.ms.common.exception;
 
-public enum BizExceptionCode {
-
-    PARAM_ERROR(400, "参数错误");
+public class BizException extends RuntimeException {
 
     private final int code;
+
     private final String message;
 
-    BizExceptionCode(int code, String message) {
+    public BizException(int code, String message) {
+        super(message);
         this.code = code;
         this.message = message;
     }
@@ -16,6 +16,7 @@ public enum BizExceptionCode {
         return code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

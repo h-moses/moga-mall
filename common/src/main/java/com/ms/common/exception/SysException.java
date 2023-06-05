@@ -1,6 +1,6 @@
-package com.ms.gateway.exception;
+package com.ms.common.exception;
 
-import com.ms.gateway.enums.SysExceptionCode;
+import com.ms.common.enums.SysExceptionCode;
 
 public class SysException extends RuntimeException {
 

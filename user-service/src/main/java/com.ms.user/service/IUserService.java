@@ -1,7 +1,7 @@
 package com.ms.user.service;
 
-import com.ms.gateway.exception.BizException;
-import com.ms.gateway.exception.SysException;
+import com.ms.common.exception.BizException;
+import com.ms.common.exception.SysException;
 import com.ms.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ms.user.vo.UserRegisterParamVo;
