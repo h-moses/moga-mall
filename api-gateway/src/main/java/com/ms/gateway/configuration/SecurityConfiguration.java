@@ -18,6 +18,9 @@ public class SecurityConfiguration {
     @Value("${jwt.expiration}")
     private int jwtExpiration;
 
+    @Value("${jwt.header}")
+    private String header;
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http

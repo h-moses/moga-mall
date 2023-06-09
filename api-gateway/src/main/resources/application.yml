@@ -46,3 +46,4 @@ logging:
 jwt:
   secret: "802324"
   expiration: 86400
+  header: Authorization

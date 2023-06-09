@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +21,7 @@ import org.omg.CORBA.IDLType;
  */
 @Data
 @ApiModel(value = "User对象", description = "")
+@TableName(value = "user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

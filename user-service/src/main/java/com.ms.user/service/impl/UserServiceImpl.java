@@ -17,9 +17,11 @@ import com.ms.user.vo.UserRegisterParamVo;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +37,8 @@ import java.util.Map;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-    private static final String JWT_KEY = "802324";
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public Object register(UserRegisterParamVo userRegisterParamVo) throws BizException, SysException {
