@@ -8,9 +8,9 @@ import java.util.Date;
 
 public class TokenUtils {
 
-    private static final long ACCESS_TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
+    private static final long ACCESS_TOKEN_EXPIRATION = 12 * 60 * 60 * 1000;
 
-    private static final long REFRESH_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000;
+    private static final long REFRESH_TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
 
     public static TokenPair generateTokenPair(User user) {
         String accessToken = JwtUtils.createToken(user.getUsername(), ACCESS_TOKEN_EXPIRATION);
@@ -20,9 +20,8 @@ public class TokenUtils {
         TokenPair tokenPair = new TokenPair();
         tokenPair.setAccessToken(accessToken);
         tokenPair.setRefreshToken(refreshToken);
-        tokenPair.setUser(user);
-        tokenPair.setAccessTokenExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION * 1000));
-        tokenPair.setRefreshTokenExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION * 1000));
+        tokenPair.setAccessTokenExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION));
+        tokenPair.setRefreshTokenExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION));
 
         return tokenPair;
     }

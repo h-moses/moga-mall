@@ -1,7 +1,6 @@
 package com.ms.user.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.enums.BizExceptionCode;
@@ -14,7 +13,6 @@ import com.ms.user.mapper.UserMapper;
 import com.ms.user.service.IUserService;
 import com.ms.user.utils.TokenUtils;
 import com.ms.user.vo.UserRegisterParamVo;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,8 +21,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>

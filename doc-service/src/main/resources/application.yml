@@ -1,0 +1,12 @@
+server:
+  port: 9006
+knife4j:
+  nacos:
+    enable: true
+    service-url: http://localhost:8848/nacos/
+    routes:
+      - name: 用户服务
+        serviceName: moga-user-service
+        location: /v2/api-docs?group=default
+  enable-aggregation: true
+#        servicePath: /api/user

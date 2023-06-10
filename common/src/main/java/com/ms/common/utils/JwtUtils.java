@@ -9,10 +9,6 @@ import java.util.Date;
 
 public class JwtUtils {
 
-    public static Object parseToken(String token) {
-        return Jwts.parser().parse(token).getBody();
-    }
-
     public static String createToken(String claim, Long expiration) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + expiration);
@@ -26,8 +22,9 @@ public class JwtUtils {
 
     public static boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(AuthConstant.JWT_SECRET).parseClaimsJws(token);
-            return true;
+            Claims claims = Jwts.parser().setSigningKey(AuthConstant.JWT_SECRET).parseClaimsJws(token).getBody();
+            Date expiration = claims.getExpiration();
+            return expiration != null && expiration.after(new Date());
         } catch (Exception e) {
             return false;
         }

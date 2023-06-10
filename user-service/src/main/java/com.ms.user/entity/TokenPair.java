@@ -19,9 +19,6 @@ public class TokenPair implements Serializable {
     @ApiModelProperty(value = "刷新token")
     String refreshToken;
 
-    @ApiModelProperty(value = "用户信息")
-    User user;
-
     @ApiModelProperty(value = "访问token过期时间")
     Date accessTokenExpiration;
 

@@ -24,7 +24,7 @@ import javax.validation.constraints.NotBlank;
 @Api(tags = "用户服务")
 @Validated
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Resource
