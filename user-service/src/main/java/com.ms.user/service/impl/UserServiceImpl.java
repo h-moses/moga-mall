@@ -12,9 +12,12 @@ import com.ms.user.entity.User;
 import com.ms.user.mapper.UserMapper;
 import com.ms.user.service.IUserService;
 import com.ms.user.utils.TokenUtils;
+import com.ms.user.utils.UserUtils;
+import dto.UserInfoDto;
 import com.ms.user.vo.UserRegisterParamVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -37,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public Object register(UserRegisterParamVo userRegisterParamVo) throws BizException, SysException {
+    public BizStatusCode register(UserRegisterParamVo userRegisterParamVo) throws BizException, SysException {
         if (!StringUtils.hasText(userRegisterParamVo.getUsername()) || !StringUtils.hasText(userRegisterParamVo.getPassword())) {
             throw new BizException(BizExceptionCode.PARAM_ERROR.getCode(), "用户名或密码不允许为空");
         }
@@ -46,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         queryWrapper.eq(User::getUsername, username);
         long count = count(queryWrapper);
         if (count > 0) {
-            return BizStatusCode.USER_ALREADY_EXIST.getMessage();
+            return BizStatusCode.USER_ALREADY_EXIST;
         }
         User user = new User();
         BeanUtils.copyProperties(userRegisterParamVo, user);
@@ -55,7 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setUpdateTime(LocalDateTime.now());
         boolean res = save(user);
         if (res) {
-            return BizStatusCode.SUCCESS.getMessage();
+            return BizStatusCode.SUCCESS;
         } else {
             throw new SysException(SysExceptionCode.SAVE_DB_ERROR.getCode(), "用户注册失败，请稍后再试！");
         }
@@ -67,15 +70,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
             throw new BizException(BizExceptionCode.PARAM_ERROR.getCode(), "用户名或密码不允许为空");
         }
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getUsername, username);
-        User user = getOne(queryWrapper);
+        User user = getByUserName(username);
         if (null == user) {
             return BizStatusCode.USER_NOT_EXIST;
         } else if (!user.getPassword().equals(SecureUtil.md5(password))) {
             return BizStatusCode.PASSWORD_INCORRECT;
         } else {
-            return TokenUtils.generateTokenPair(user);
+            UserInfoDto userInfoDto = new UserInfoDto();
+            BeanUtils.copyProperties(user, userInfoDto);
+            userInfoDto.setGender(UserUtils.convertGender(user.getGender()));
+            return userInfoDto;
         }
+    }
+
+    @Cacheable(value = "user", key = "#username")
+    @Override
+    public UserInfoDto queryInfo(String username) throws BizException {
+        User user = getByUserName(username);
+        UserInfoDto userInfoDto = new UserInfoDto();
+        BeanUtils.copyProperties(user, userInfoDto);
+        userInfoDto.setGender(UserUtils.convertGender(user.getGender()));
+        return userInfoDto;
+    }
+
+    private User getByUserName(String username) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, username);
+        return getOne(queryWrapper);
     }
 }

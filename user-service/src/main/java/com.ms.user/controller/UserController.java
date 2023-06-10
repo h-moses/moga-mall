@@ -2,9 +2,14 @@ package com.ms.user.controller;
 
 
 import com.ms.common.api.Response;
+import com.ms.common.enums.BizStatusCode;
+import com.ms.user.entity.TokenPair;
+import com.ms.user.entity.User;
 import com.ms.user.service.impl.UserServiceImpl;
+import com.ms.user.utils.TokenUtils;
 import com.ms.user.vo.UpdateUserInfoParamVo;
 import com.ms.user.vo.UserRegisterParamVo;
+import dto.UserInfoDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -38,14 +43,24 @@ public class UserController {
 
     @ApiOperation(value = "用户登录接口")
     @PostMapping("/login")
-    public Response<Object> login(@NotBlank @RequestParam("username") String username,
-                          @NotBlank @RequestParam("password") String password) {
-        return Response.SUCCESS(userService.login(username, password));
+    public Response<TokenPair> login(@NotBlank @RequestParam("username") String username,
+                                     @NotBlank @RequestParam("password") String password) {
+        Object res = userService.login(username, password);
+        if (res.getClass().isAssignableFrom(UserInfoDto.class)) {
+            return Response.SUCCESS(TokenUtils.generateTokenPair(((UserInfoDto) res).getUsername()));
+        }
+        return Response.SUCCESS((BizStatusCode) res);
     }
 
     @ApiOperation(value = "个人信息修改接口")
     @PostMapping("/update")
     public Response<Object> updateInfo(@RequestBody UpdateUserInfoParamVo userInfoParamVo) {
         return null;
+    }
+
+    @ApiOperation(value = "个人信息查询接口")
+    @GetMapping("/info")
+    public Response<Object> queryInfo(String username) {
+        return Response.SUCCESS(userService.queryInfo(username));
     }
 }
