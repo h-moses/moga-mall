@@ -1,5 +1,7 @@
 package com.ms.common.exception;
 
+import com.ms.common.enums.BizStatusCode;
+
 public class BizException extends RuntimeException {
 
     private final int code;
@@ -10,6 +12,12 @@ public class BizException extends RuntimeException {
         super(message);
         this.code = code;
         this.message = message;
+    }
+
+    public BizException(BizStatusCode bizStatusCode) {
+        super(bizStatusCode.getMessage());
+        this.code = bizStatusCode.getCode();
+        this.message = bizStatusCode.getMessage();
     }
 
     public int getCode() {

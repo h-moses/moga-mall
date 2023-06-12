@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @ApiModel(value = "UpdateUserInfoParamVo", description = "个人信息修改接收参数")
@@ -20,8 +22,10 @@ public class UpdateUserInfoParamVo {
     private LocalDate birthday;
 
     @ApiModelProperty("邮箱")
+    @Email
     private String email;
 
     @ApiModelProperty("手机号码")
     private String phone;
+
 }

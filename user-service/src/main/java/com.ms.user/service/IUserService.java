@@ -1,9 +1,11 @@
 package com.ms.user.service;
 
+import com.ms.common.enums.BizStatusCode;
 import com.ms.common.exception.BizException;
 import com.ms.common.exception.SysException;
 import com.ms.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import dto.UserInfoDto;
 import com.ms.user.vo.UserRegisterParamVo;
 
 /**
@@ -16,7 +18,9 @@ import com.ms.user.vo.UserRegisterParamVo;
  */
 public interface IUserService extends IService<User> {
 
-    Object register(UserRegisterParamVo userRegisterParamVo) throws BizException, SysException;
+    BizStatusCode register(UserRegisterParamVo userRegisterParamVo) throws BizException, SysException;
 
     Object login(String username, String password) throws BizException;
+
+    UserInfoDto queryInfo(String username) throws BizException;
 }
