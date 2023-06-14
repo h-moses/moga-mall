@@ -1,24 +1,14 @@
 package com.ms.user.entity;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.omg.CORBA.IDLType;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -49,9 +39,7 @@ public class User implements Serializable {
     private Integer gender;
 
     @ApiModelProperty("生日")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate birthday;
+    private Date birthday;
 
     @ApiModelProperty("邮箱")
     private String email;
@@ -66,14 +54,10 @@ public class User implements Serializable {
     private Integer status;
 
     @ApiModelProperty("创建时间")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty("更新时间")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }

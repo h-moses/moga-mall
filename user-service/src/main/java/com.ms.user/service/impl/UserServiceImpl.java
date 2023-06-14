@@ -1,6 +1,7 @@
 package com.ms.user.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.system.UserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.enums.BizExceptionCode;
@@ -11,9 +12,9 @@ import com.ms.common.exception.SysException;
 import com.ms.user.entity.User;
 import com.ms.user.mapper.UserMapper;
 import com.ms.user.service.IUserService;
-import com.ms.user.utils.TokenUtils;
 import com.ms.user.utils.UserUtils;
-import dto.UserInfoDto;
+import com.ms.user.dto.UserInfoDto;
+import com.ms.user.vo.UpdateUserInfoParamVo;
 import com.ms.user.vo.UserRegisterParamVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CachePut;
@@ -24,6 +25,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -54,8 +56,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = new User();
         BeanUtils.copyProperties(userRegisterParamVo, user);
         user.setPassword(SecureUtil.md5(userRegisterParamVo.getPassword()));
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
         boolean res = save(user);
         if (res) {
             return BizStatusCode.SUCCESS;
@@ -78,7 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } else {
             UserInfoDto userInfoDto = new UserInfoDto();
             BeanUtils.copyProperties(user, userInfoDto);
-            userInfoDto.setGender(UserUtils.convertGender(user.getGender()));
+            userInfoDto.setGender(UserUtils.convert2String(user.getGender()));
             return userInfoDto;
         }
     }
@@ -89,8 +91,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = getByUserName(username);
         UserInfoDto userInfoDto = new UserInfoDto();
         BeanUtils.copyProperties(user, userInfoDto);
-        userInfoDto.setGender(UserUtils.convertGender(user.getGender()));
+        userInfoDto.setGender(UserUtils.convert2String(user.getGender()));
         return userInfoDto;
+    }
+
+    @CachePut(value = "user", key = "#username")
+    @Override
+    public UserInfoDto updateInfo(String username, UpdateUserInfoParamVo updateUserInfoParamVo) throws BizException {
+        User user = getByUserName(username);
+        if (null == user) {
+            throw new BizException(BizStatusCode.USER_NOT_EXIST);
+        }
+        BeanUtils.copyProperties(updateUserInfoParamVo, user);
+        user.setGender(UserUtils.convert2Code(updateUserInfoParamVo.getGender()));
+        user.setUpdateTime(new Date());
+        boolean res = updateById(user);
+        if (res) {
+            UserInfoDto userInfoDto = new UserInfoDto();
+            BeanUtils.copyProperties(user, userInfoDto);
+            userInfoDto.setGender(UserUtils.convert2String(user.getGender()));
+            return userInfoDto;
+        } else {
+            throw new SysException(SysExceptionCode.UPDATE_DB_ERROR);
+        }
     }
 
     private User getByUserName(String username) {

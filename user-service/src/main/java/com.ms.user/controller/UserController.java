@@ -2,14 +2,14 @@ package com.ms.user.controller;
 
 
 import com.ms.common.api.Response;
+import com.ms.common.constant.AuthConstant;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.user.entity.TokenPair;
-import com.ms.user.entity.User;
 import com.ms.user.service.impl.UserServiceImpl;
 import com.ms.user.utils.TokenUtils;
 import com.ms.user.vo.UpdateUserInfoParamVo;
 import com.ms.user.vo.UserRegisterParamVo;
-import dto.UserInfoDto;
+import com.ms.user.dto.UserInfoDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -54,13 +54,14 @@ public class UserController {
 
     @ApiOperation(value = "个人信息修改接口")
     @PostMapping("/update")
-    public Response<Object> updateInfo(@RequestBody UpdateUserInfoParamVo userInfoParamVo) {
-        return null;
+    public Response<Object> updateInfo(@RequestHeader(AuthConstant.USER_HEADER) String username,
+                                       @RequestBody UpdateUserInfoParamVo userInfoParamVo) {
+        return Response.SUCCESS(userService.updateInfo(username, userInfoParamVo));
     }
 
     @ApiOperation(value = "个人信息查询接口")
     @GetMapping("/info")
-    public Response<Object> queryInfo(String username) {
+    public Response<Object> queryInfo(@RequestHeader(AuthConstant.USER_HEADER) String username) {
         return Response.SUCCESS(userService.queryInfo(username));
     }
 }

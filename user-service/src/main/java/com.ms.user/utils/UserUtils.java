@@ -12,7 +12,15 @@ public class UserUtils {
             2, "女"
     );
 
-    public static String convertGender(Integer key) {
+    public static String convert2String(Integer key) {
         return genderMap.get(key);
+    }
+    public static Integer convert2Code(String value) {
+        for (Map.Entry<Integer, String> entry: genderMap.entrySet()) {
+            if (entry.getValue().equals(value)) {
+                return entry.getKey();
+            }
+        }
+        return 0;
     }
 }
