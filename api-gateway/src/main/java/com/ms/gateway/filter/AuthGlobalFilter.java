@@ -7,7 +7,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -41,8 +40,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         if (JwtUtils.validateToken(realToken)) {
             String username = JwtUtils.getSubjectFromToken(realToken);
             // token合法，从中取出用户信息，交由用户服务
-            ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, username).build();
-            exchange = exchange.mutate().request(request).build();
+            exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, username);
             return chain.filter(exchange);
         } else {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

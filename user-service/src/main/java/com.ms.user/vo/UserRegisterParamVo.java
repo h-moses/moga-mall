@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @ApiModel(value = "UserRegisterParamVo", description = "用户注册接收参数")
@@ -31,7 +31,7 @@ public class UserRegisterParamVo {
     private Integer gender;
 
     @ApiModelProperty("生日")
-    private LocalDate birthday;
+    private Date birthday;
 
     @ApiModelProperty("邮箱")
     @Email
