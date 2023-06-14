@@ -1,6 +1,5 @@
 package com.ms.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,7 +26,6 @@ public class UserInfoDto implements Serializable {
     private String gender;
 
     @ApiModelProperty("生日")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @ApiModelProperty("邮箱")
@@ -37,6 +35,5 @@ public class UserInfoDto implements Serializable {
     private String phone;
 
     @ApiModelProperty("注册时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 }
