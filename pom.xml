@@ -8,6 +8,7 @@
         <module>common</module>
         <module>api-gateway</module>
         <module>doc-service</module>
+        <module>product-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

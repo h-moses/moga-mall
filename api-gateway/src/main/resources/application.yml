@@ -13,6 +13,7 @@ spring:
         username: nacos
         password: nacos
     gateway:
+      enabled: true
       discovery:
         locator:
           lowerCaseServiceId: true
@@ -25,7 +26,27 @@ spring:
             - Path=/api/user/**
           filters:
             - StripPrefix=1
-      enabled: true
+        - id: product-service
+          uri: lb://moga-product-service
+          order: 1
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - StripPrefix=1
+        - id: brand-service
+          uri: lb://moga-product-service
+          order: 1
+          predicates:
+            - Path=/api/brand/**
+          filters:
+            - StripPrefix=1
+        - id: category-service
+          uri: lb://moga-product-service
+          order: 1
+          predicates:
+            - Path=/api/category/**
+          filters:
+            - StripPrefix=1
   devtools:
     livereload:
       port: 35734

@@ -21,8 +21,9 @@ import java.util.List;
 public class AuthGlobalFilter implements GlobalFilter {
 
     private static final List<String> IGNORE_URLS = Arrays.asList(
-            "/api/user/register",
-            "/api/user/login"
+            "/user/register",
+            "/user/login",
+            "/category/treelist"
     );
 
     @Override
