@@ -34,6 +34,7 @@
         <hutool-all.version>5.8.10</hutool-all.version>
         <knife4j.version>4.0.0</knife4j.version>
         <jwt.version>0.7.0</jwt.version>
+        <minio.version>8.2.6</minio.version>
     </properties>
     <dependencies>
         <dependency>

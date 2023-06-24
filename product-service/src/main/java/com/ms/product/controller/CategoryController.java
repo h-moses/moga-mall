@@ -6,10 +6,7 @@ import com.ms.product.service.impl.CategoryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -34,5 +31,24 @@ public class CategoryController {
     @GetMapping("/treelist")
     public Response treeList() {
         return Response.SUCCESS(categoryService.getTreeList());
+    }
+
+    @ApiOperation(value = "删除分类")
+    @GetMapping("/delete")
+    public Response deleteByIds(@RequestBody Integer[] ids) {
+        return Response.SUCCESS(categoryService.deleteByIds(ids));
+    }
+
+
+    @ApiOperation(value = "新增分类")
+    @PostMapping("/add")
+    public Response add() {
+        return Response.SUCCESS(null);
+    }
+
+    @ApiOperation(value = "新增分类")
+    @PostMapping("/update")
+    public Response update() {
+        return Response.SUCCESS(null);
     }
 }

@@ -1,5 +1,7 @@
 package com.ms.product.service.impl;
 
+import com.ms.common.enums.BizStatusCode;
+import com.ms.common.exception.BizException;
 import com.ms.common.utils.BeanUtils;
 import com.ms.product.dto.CategoryTreeDto;
 import com.ms.product.entity.Category;
@@ -8,7 +10,7 @@ import com.ms.product.service.ICategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         primaryDto.forEach(categoryTreeDto -> categoryTreeDto.setChildren(getCategoryChildren(categoryTreeDto, categoryList)));
 
         return primaryDto;
+    }
+
+    @Override
+    public boolean deleteByIds(Integer[] ids) {
+        List<Category> categoryList = list();
+        for (Integer id: ids) {
+            boolean res = categoryList.stream().anyMatch(c -> c.getParentId() == id.intValue());
+            if (res) {
+                throw new BizException(BizStatusCode.CATEGORY_HAS_CHILDREN);
+            }
+        }
+        int deleted = baseMapper.deleteBatchIds(Arrays.asList(ids));
+        return deleted > 0;
     }
 
     private List<CategoryTreeDto> getCategoryChildren(CategoryTreeDto primaryDto, List<Category> source) {

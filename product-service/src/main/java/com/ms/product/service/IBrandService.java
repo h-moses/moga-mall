@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBrandService extends IService<Brand> {
 
+
+    Brand brandInfo(String brandId);
+
+    boolean deleteByIds(int[] ids);
 }

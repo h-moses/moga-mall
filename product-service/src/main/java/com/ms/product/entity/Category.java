@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class Category implements Serializable {
     private Integer level;
 
     @ApiModelProperty("分类状态（0：禁用，1：启用）")
+    @TableLogic()
     private Integer status;
 
     @ApiModelProperty("创建时间")

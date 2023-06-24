@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ms
  * @since 2023-06-14
  */
-@Api(value = "商品服务")
+@Api(tags = "商品服务")
 @Validated
 @RestController
 @RequestMapping("/product")
