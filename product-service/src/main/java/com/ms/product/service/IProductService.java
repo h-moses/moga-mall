@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProductService extends IService<Product> {
 
+    Product searchProduct(String keyword, int categoryId, String orderBy, int pageNum, int pageSize);
+
+    Product productInfo(int productId);
+
+    Product updateStock(int productId, int stock);
+
+    Product secKillProduct(String username, int productId);
 }
