@@ -11,7 +11,7 @@ public class MybatisGenerator {
 
     private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/moga-mall-product-db?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false";
 
-    private static final String OUTPUT_DIR = "D:\\WorkStationJava\\在线商城\\moga-mall-server\\product-service\\src\\main\\java";
+    private static final String OUTPUT_DIR = "D:\\WorkStationJava\\在线商城\\moga-mall\\product-service\\src\\main\\java";
 
     private static final String USERNAME = "root";
 

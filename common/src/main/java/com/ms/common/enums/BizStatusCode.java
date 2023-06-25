@@ -25,6 +25,7 @@ public enum BizStatusCode {
     GOODS_ALREADY_EXIST(6002, "商品已存在"),
     GOODS_OFF_SHELF(6003, "商品已下架"),
     GOODS_ON_SHELF(6004, "商品已上架"),
+    CATEGORY_HAS_CHILDREN(6005, "分类包含子分类"),
     COUPON_NOT_EXIST(7001, "优惠券不存在"),
     COUPON_ALREADY_EXIST(7002, "优惠券已存在"),
     COUPON_EXPIRED(7003, "优惠券已过期"),
@@ -45,7 +46,8 @@ public enum BizStatusCode {
     ADDRESS_INVALID(11001, "收货地址无效"),
     ORDER_INVALID(12001, "订单无效"),
     GOODS_INVALID(13001, "商品无效"),
-    COUPON_LIMIT_EXCEEDED(14001, "优惠券领取次数超过限制");
+    COUPON_LIMIT_EXCEEDED(14001, "优惠券领取次数超过限制"),
+    BRAND_NOT_ExIST(15001, "品牌不存在");
 
     private final int code;
     private final String message;
