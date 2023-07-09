@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MybatisGenerator {
 
-    private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/moga-mall-product-db?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false";
+    private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/moga_mall_pms?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false";
 
     private static final String OUTPUT_DIR = "D:\\WorkStationJava\\在线商城\\moga-mall\\product-service\\src\\main\\java";
 
@@ -24,7 +24,7 @@ public class MybatisGenerator {
                 // 包配置
                 .packageConfig((scanner, builder) -> builder.parent(scanner.apply("请输入包名？")))
                 // 策略配置
-                .strategyConfig((scanner, builder) -> builder.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all")))
+                .strategyConfig((scanner, builder) -> builder.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all"))).addFieldPrefix("pms_", "")
                         .controllerBuilder().enableRestStyle().enableHyphenStyle()
                         .entityBuilder().enableLombok()
                         .mapperBuilder().enableMapperAnnotation().build())

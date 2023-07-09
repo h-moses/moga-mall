@@ -1,5 +1,6 @@
 package com.ms.product.service;
 
+import com.ms.product.dto.ProductDto;
 import com.ms.product.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProductService extends IService<Product> {
 
+    boolean saveProduct(ProductDto productDto);
 }

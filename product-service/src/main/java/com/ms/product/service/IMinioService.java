@@ -10,4 +10,6 @@ public interface IMinioService {
     Optional<String> downloadObject(String objectName) throws Exception;
 
     void deleteObject(String objectName) throws Exception;
+
+    String getFileUrl(String objectName);
 }

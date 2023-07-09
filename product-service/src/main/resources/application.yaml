@@ -1,10 +1,14 @@
 server:
-  port: 9002
+  port: 8002
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/moga-mall-product-db?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/moga_mall_pms?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
     druid:
       min-idle: 1
       max-wait: -1
@@ -53,7 +57,7 @@ mybatis-plus:
 
 # MinIO配置信息
 minio:
-  endpoint: http://192.168.78.101:9001
-  access-key: admin
-  secret-key: 12345678
+  endpoint: http://127.0.0.1:9001
+  access-key: minio
+  secret-key: minio@802324
   bucket-name: moga-mall-product

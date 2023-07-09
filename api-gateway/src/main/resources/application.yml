@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8000
 
 spring:
   application:
@@ -46,7 +46,7 @@ spring:
           predicates:
             - Path=/api/category/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=1,2
   devtools:
     livereload:
       port: 35734
