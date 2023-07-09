@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: moga-warehouse-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 3aa7be38-fa63-4979-bebd-1de7c22ac44f

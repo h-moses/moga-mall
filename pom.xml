@@ -9,6 +9,7 @@
         <module>api-gateway</module>
         <module>doc-service</module>
         <module>product-service</module>
+        <module>warehouse-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
