@@ -1,5 +1,6 @@
 package com.ms.product.service;
 
+import com.ms.product.dto.ProductDto;
 import com.ms.product.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,11 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProductService extends IService<Product> {
 
-    Product searchProduct(String keyword, int categoryId, String orderBy, int pageNum, int pageSize);
+    boolean saveProduct(ProductDto productDto);
 
-    Product productInfo(int productId);
-
-    Product updateStock(int productId, int stock);
-
-    Product secKillProduct(String username, int productId);
 }

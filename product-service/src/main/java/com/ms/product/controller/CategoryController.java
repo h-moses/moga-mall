@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 @Api(tags = "分类服务")
 @Validated
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/product/category")
 public class CategoryController {
 
     @Resource
