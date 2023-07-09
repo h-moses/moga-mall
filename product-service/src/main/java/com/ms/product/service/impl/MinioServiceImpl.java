@@ -1,18 +1,24 @@
 package com.ms.product.service.impl;
 
+import com.ms.common.enums.SysExceptionCode;
+import com.ms.common.exception.SysException;
 import com.ms.product.service.IMinioService;
-import io.minio.GetObjectArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
-import io.minio.RemoveObjectArgs;
+import io.minio.*;
+import io.minio.errors.*;
+import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
+@Service
 public class MinioServiceImpl implements IMinioService {
 
     @Resource
@@ -57,5 +63,21 @@ public class MinioServiceImpl implements IMinioService {
                 .object(objectName)
                 .build();
         minioClient.removeObject(args);
+    }
+
+    @Override
+    public String getFileUrl(String objectName) {
+        String url;
+        try {
+            url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                    .method(Method.GET)
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .expiry(60 * 60 * 24)
+                    .build());
+        } catch (Exception e) {
+            throw new SysException(SysExceptionCode.URL_NOT_EXIST);
+        }
+        return url;
     }
 }

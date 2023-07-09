@@ -1,18 +1,18 @@
 package com.ms.product.mapper;
 
-import com.ms.product.entity.Brand;
+import com.ms.product.entity.PmsSkuImages;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * sku图片 Mapper 接口
  * </p>
  *
  * @author ms
- * @since 2023-06-14
+ * @since 2023-07-01
  */
 @Mapper
-public interface BrandMapper extends BaseMapper<Brand> {
+public interface PmsSkuImagesMapper extends BaseMapper<PmsSkuImages> {
 
 }
