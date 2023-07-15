@@ -2,13 +2,16 @@ package com.ms.warehouse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.warehouse.entity.WmsWareInfo;
 import com.ms.warehouse.entity.WmsWareSku;
 import com.ms.warehouse.mapper.WmsWareSkuMapper;
 import com.ms.warehouse.service.IWmsWareSkuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ms.warehouse.vo.StockVo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,5 +35,16 @@ public class WmsWareSkuServiceImpl extends ServiceImpl<WmsWareSkuMapper, WmsWare
         }
         Page<WmsWareSku> page = new Page<>(pageNum, pageSize);
         return page(page, queryWrapper);
+    }
+
+    @Override
+    public List<StockVo> isStock(List<Long> skuIds) {
+        return skuIds.stream().map(it -> {
+            StockVo stockVo = new StockVo();
+            long stock = baseMapper.getStock(it);
+            stockVo.setSkuId(it);
+            stockVo.setIsStocked(stock > 0);
+            return stockVo;
+        }).collect(Collectors.toList());
     }
 }

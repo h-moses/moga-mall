@@ -1,9 +1,11 @@
 package com.ms.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.warehouse.entity.WmsWareInfo;
 import com.ms.warehouse.entity.WmsWareSku;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.warehouse.vo.StockVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +18,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IWmsWareSkuService extends IService<WmsWareSku> {
 
     Page<WmsWareSku> queryPage(Long skuId, Long wareId, Integer pageNum, Integer pageSize);
+
+    List<StockVo> isStock(List<Long> skuIds);
 }

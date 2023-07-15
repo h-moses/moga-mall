@@ -3,6 +3,7 @@ package com.ms.warehouse.mapper;
 import com.ms.warehouse.entity.WmsWareSku;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WmsWareSkuMapper extends BaseMapper<WmsWareSku> {
 
+    long getStock(@Param("skuId") Long skuId);
 }
