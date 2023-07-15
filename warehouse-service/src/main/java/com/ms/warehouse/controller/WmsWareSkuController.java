@@ -6,13 +6,11 @@ import com.ms.common.api.Response;
 import com.ms.warehouse.entity.WmsWareInfo;
 import com.ms.warehouse.entity.WmsWareSku;
 import com.ms.warehouse.service.impl.WmsWareSkuServiceImpl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.ms.warehouse.vo.StockVo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +28,14 @@ public class WmsWareSkuController {
     WmsWareSkuServiceImpl wareSkuService;
 
 
+    /**
+     * 分页查询商品库存
+     * @param skuId
+     * @param wareId 仓库ID
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @GetMapping("/ware/sku")
     public Response pageQuery(@RequestParam("skuId") Long skuId,
                               @RequestParam("wareId") Long wareId,
@@ -37,5 +43,11 @@ public class WmsWareSkuController {
                               @RequestParam("pageSize") Integer pageSize) {
         Page<WmsWareSku> wmsWareSkuPage = wareSkuService.queryPage(skuId, wareId, pageNum, pageSize);
         return Response.SUCCESS(wmsWareSkuPage);
+    }
+
+    @PostMapping("/hasstock")
+    public Response HasStockBySkuId(@RequestBody List<Long> skuIds) {
+        List<StockVo> stock = wareSkuService.isStock(skuIds);
+        return Response.SUCCESS(stock);
     }
 }

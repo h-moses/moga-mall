@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
+
 @EnableDiscoveryClient
 @SpringBootApplication
 public class WarehouseServiceApp {
