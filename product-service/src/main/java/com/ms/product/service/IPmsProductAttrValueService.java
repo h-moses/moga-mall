@@ -16,4 +16,8 @@ import java.util.List;
 public interface IPmsProductAttrValueService extends IService<PmsProductAttrValue> {
 
     void saveProductAttr(List<PmsProductAttrValue> objectList);
+
+    List<PmsProductAttrValue> queryBySpuId(Long spuId);
+
+    void updateAttr(Long spuId, List<PmsProductAttrValue> productAttrValues);
 }

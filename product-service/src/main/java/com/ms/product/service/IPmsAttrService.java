@@ -32,6 +32,8 @@ public interface IPmsAttrService extends IService<PmsAttr> {
     void deleteRelation(AttrGroupRelationParamVo[] attrGroupRelationParamVos);
 
     Page<PmsAttr> getUnRelatedAttr(Long attrGroupId, Integer pageNum, Integer pageSize);
+
+    List<Long> searchAttr(List<Long> attrIdList);
 }
 
 

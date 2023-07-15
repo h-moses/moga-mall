@@ -168,4 +168,11 @@ public class PmsAttrServiceImpl extends ServiceImpl<PmsAttrMapper, PmsAttr> impl
 
         return page(new Page<>(pageNum, pageSize), queryWrapper);
     }
+
+    @Override
+    public List<Long> searchAttr(List<Long> attrIdList) {
+        LambdaQueryWrapper<PmsAttr> wrapper = new LambdaQueryWrapper<PmsAttr>().in(PmsAttr::getAttrId, attrIdList).eq(PmsAttr::getSearchType, 1);
+        List<PmsAttr> attrList = list(wrapper);
+        return attrList.stream().map(PmsAttr::getAttrId).collect(Collectors.toList());
+    }
 }

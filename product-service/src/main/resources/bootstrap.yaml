@@ -6,3 +6,14 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         namespace: 83fc6b20-4f5d-4b91-a645-04d3c32b337a
+        file-extension: yml
+        config-retry-time: 5000
+        refresh-enabled: true
+        timeout: 3000
+        extension-configs:
+          - data-id: redis
+            group: redis
+            refresh: true
+          - data-id: rabbit
+            group: rabbit
+            refresh: true
