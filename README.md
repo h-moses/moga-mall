@@ -784,4 +784,4 @@
 
 ## 总结
 
-本项目实现了一个基于微服务架构的电商平台，提供了用户注册、登录、商品查询、购物车、订单、支付、物流、评论等功能。通过智能助理，用户可以通过语音交互方式与平台进行交互，提高了购物体验的便捷性。同时，本项目采用了多种技术和工具，如Spring Boot、Spring Cloud Alibaba、MySQL、Redis、Elasticsearch、RocketMQ、Alipay、WeChat Pay、Express API、JWT、Spring Security、OAuth2、HTTPS、Docker和Kubernetes等，实现了一个高可用、高性能、高安全性的电商平台。
+本项目实现了一个基于微服务架构的电商平台，提供了用户注册、登录、商品查询、购物车、订单、支付、物流、评论等功能。通过智能助理，用户可以通过语音交互方式与平台进行交互，提高了购物体验的便捷性。同时，本项目采用了多种技术和工具，如Spring Boot、Spring Cloud Alibaba、MySQL、Redis、Elasticsearch、RabbitMQ、Alipay、WeChat Pay、JWT、Docker和Kubernetes等，实现了一个高可用、高性能、高安全性的电商平台。
