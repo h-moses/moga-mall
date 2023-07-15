@@ -9,6 +9,7 @@ import com.ms.product.service.IPmsSpuInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.product.vo.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -152,6 +153,22 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
     public void upShelf(Long spuId) {
         List<SkuEsModel> models = new ArrayList<>();
         List<PmsSkuInfo> infoList = skuInfoService.getSkuBySpuId(spuId);
+
+        // 查询当前sku的所有可以用来被检索的规格属性
+        List<PmsProductAttrValue> productAttrValues = productAttrValueService.queryBySpuId(spuId);
+        List<Long> attrIdList = productAttrValues.stream().map(PmsProductAttrValue::getAttrId).collect(Collectors.toList());
+
+        // 找出可以快速检索的id
+        List<Long> searchAttr = attrService.searchAttr(attrIdList);
+
+        // 根据id找出快速检索的属性
+        List<SkuEsModel.Attrs> attrs = productAttrValues.stream().filter(item -> searchAttr.contains(item.getAttrId())).map(it -> {
+            SkuEsModel.Attrs attrs1 = new SkuEsModel.Attrs();
+            BeanUtils.copyProperties(it, attrs1);
+            return attrs1;
+        }).collect(Collectors.toList());
+
+
         List<SkuEsModel> esModelList = infoList.stream().map(pmsSkuInfo -> {
             SkuEsModel skuEsModel = new SkuEsModel();
             BeanUtils.copyProperties(pmsSkuInfo, skuEsModel);
@@ -159,17 +176,20 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
             skuEsModel.setSkuImage(pmsSkuInfo.getSkuDefaultImg());
 
             // 查询库存系统是否有库存
-
+            skuEsModel.setHasStock(false);
             // 热度评分
+            skuEsModel.setHotScore(0L);
 
             // 查询品牌
             PmsBrand brand = brandService.getById(skuEsModel.getBrandId());
             skuEsModel.setBrandName(brand.getName());
             skuEsModel.setBrandImage(brand.getLogo());
+
             PmsCategory category = categoryService.getById(skuEsModel.getCategoryId());
             skuEsModel.setCategoryName(category.getName());
 
             // 查询sku的所有可以被检索的规格属性
+            skuEsModel.setAttrs(attrs);
 //            productAttrValueService
             return skuEsModel;
         }).collect(Collectors.toList());
