@@ -7,6 +7,7 @@ import com.ms.warehouse.entity.WmsWareInfo;
 import com.ms.warehouse.entity.WmsWareSku;
 import com.ms.warehouse.service.impl.WmsWareSkuServiceImpl;
 import com.ms.warehouse.vo.StockVo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ import java.util.List;
  * @since 2023-07-09
  */
 @RestController
-@RequestMapping("/wms-ware-sku")
+@RequestMapping("/warehouse/sku")
 public class WmsWareSkuController {
 
     @Resource
@@ -45,8 +46,9 @@ public class WmsWareSkuController {
         return Response.SUCCESS(wmsWareSkuPage);
     }
 
-    @PostMapping("/hasstock")
-    public Response HasStockBySkuId(@RequestBody List<Long> skuIds) {
+    @ApiOperation(value = "根据skuId获取库存")
+    @PostMapping("/getStock")
+    public Response<List<StockVo>> HasStockBySkuId(@RequestBody List<Long> skuIds) {
         List<StockVo> stock = wareSkuService.isStock(skuIds);
         return Response.SUCCESS(stock);
     }

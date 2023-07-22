@@ -15,7 +15,7 @@ public class CategoryTreeDto implements Serializable {
 
     @ApiModelProperty("分类ID")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("分类名称")
     private String name;

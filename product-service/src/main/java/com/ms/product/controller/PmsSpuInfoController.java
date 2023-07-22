@@ -7,6 +7,7 @@ import com.ms.common.enums.BizStatusCode;
 import com.ms.product.entity.PmsSpuInfo;
 import com.ms.product.service.impl.PmsSpuInfoServiceImpl;
 import com.ms.product.vo.SaveSpuVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
  * @author ms
  * @since 2023-07-01
  */
+@Api(tags = "spu服务")
 @RestController
 @RequestMapping("/product/spuInfo")
 public class PmsSpuInfoController {
@@ -28,6 +30,7 @@ public class PmsSpuInfoController {
     @Resource
     PmsSpuInfoServiceImpl spuInfoService;
 
+    @ApiOperation(value = "添加商品")
     @PostMapping("/savespu")
     public Response save(@RequestBody SaveSpuVo saveSpuVo) {
         spuInfoService.saveSpuInfo(saveSpuVo);
@@ -46,6 +49,7 @@ public class PmsSpuInfoController {
         return Response.SUCCESS(infoPage);
     }
 
+    @ApiOperation(value = "商品上架")
     @PostMapping("/{spuid}/onshelf")
     public Response onShelf(@PathVariable("spuid") Long spuId) {
         spuInfoService.upShelf(spuId);

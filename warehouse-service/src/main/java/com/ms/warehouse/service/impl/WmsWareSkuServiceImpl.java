@@ -41,6 +41,7 @@ public class WmsWareSkuServiceImpl extends ServiceImpl<WmsWareSkuMapper, WmsWare
     public List<StockVo> isStock(List<Long> skuIds) {
         return skuIds.stream().map(it -> {
             StockVo stockVo = new StockVo();
+            // 如果数据库没有该skuId,会报错
             long stock = baseMapper.getStock(it);
             stockVo.setSkuId(it);
             stockVo.setIsStocked(stock > 0);
