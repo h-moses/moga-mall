@@ -15,6 +15,10 @@ spring:
       validation-query: SELECT 1
     username: root
     password: 802324
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
   cloud:
     nacos:
       discovery:

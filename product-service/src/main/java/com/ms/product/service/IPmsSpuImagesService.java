@@ -1,6 +1,6 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsSpuImages;
+import com.ms.product.domain.entity.PmsSpuImages;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

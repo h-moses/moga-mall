@@ -2,23 +2,22 @@ package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.api.Response;
 import com.ms.common.enums.ProductStatus;
 import com.ms.common.to.es.SkuEsModel;
+import com.ms.product.domain.entity.*;
+import com.ms.product.domain.vo.*;
 import com.ms.product.feign.SearchFeignService;
 import com.ms.product.feign.WareFeignService;
-import com.ms.product.entity.*;
 import com.ms.product.mapper.PmsSpuInfoMapper;
 import com.ms.product.service.IPmsSpuInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ms.product.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

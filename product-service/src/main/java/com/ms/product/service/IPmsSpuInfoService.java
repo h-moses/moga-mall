@@ -1,9 +1,9 @@
 package com.ms.product.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.product.entity.PmsSpuInfo;
+import com.ms.product.domain.entity.PmsSpuInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.product.vo.SaveSpuVo;
+import com.ms.product.domain.vo.SaveSpuVo;
 
 /**
  * <p>

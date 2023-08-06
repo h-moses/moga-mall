@@ -1,6 +1,6 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsSkuSaleAttrValue;
+import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,13 +1,12 @@
 package com.ms.product.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.common.exception.BizException;
-import com.ms.product.entity.PmsCategoryBrandRelation;
+import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 import com.ms.product.service.impl.PmsCategoryBrandRelationServiceImpl;
-import com.ms.product.vo.BrandResponseVo;
+import com.ms.product.domain.vo.BrandResponseVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

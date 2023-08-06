@@ -1,6 +1,6 @@
 package com.ms.product.service.impl;
 
-import com.ms.product.entity.PmsSpuComment;
+import com.ms.product.domain.entity.PmsSpuComment;
 import com.ms.product.mapper.PmsSpuCommentMapper;
 import com.ms.product.service.IPmsSpuCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

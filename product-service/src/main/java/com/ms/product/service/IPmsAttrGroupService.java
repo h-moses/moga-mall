@@ -1,9 +1,9 @@
 package com.ms.product.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.product.entity.PmsAttrGroup;
+import com.ms.product.domain.entity.PmsAttrGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.product.vo.AttrGroupDetailVo;
+import com.ms.product.domain.vo.AttrGroupDetailVo;
 
 import java.util.List;
 

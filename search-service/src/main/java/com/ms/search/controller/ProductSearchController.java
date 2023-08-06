@@ -20,7 +20,7 @@ public class ProductSearchController {
     @Resource
     ProductSearchService productSearchService;
 
-    @PostMapping("/product/onshelf")
+    @PostMapping("/product/on_shelf")
     public Response upProductStatus(@RequestBody List<SkuEsModel> models) {
 
         try {

@@ -1,7 +1,7 @@
 package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ms.product.entity.PmsProductAttrValue;
+import com.ms.product.domain.entity.PmsProductAttrValue;
 import com.ms.product.mapper.PmsProductAttrValueMapper;
 import com.ms.product.service.IPmsProductAttrValueService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

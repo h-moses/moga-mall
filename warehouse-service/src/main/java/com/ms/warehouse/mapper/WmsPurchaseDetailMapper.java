@@ -1,6 +1,6 @@
 package com.ms.warehouse.mapper;
 
-import com.ms.warehouse.entity.WmsPurchaseDetail;
+import com.ms.warehouse.domain.entity.WmsPurchaseDetail;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

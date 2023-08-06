@@ -1,9 +1,9 @@
 package com.ms.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.warehouse.entity.WmsWareSku;
+import com.ms.warehouse.domain.entity.WmsWareSku;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.warehouse.vo.StockVo;
+import com.ms.warehouse.domain.vo.StockVo;
 
 import java.util.List;
 

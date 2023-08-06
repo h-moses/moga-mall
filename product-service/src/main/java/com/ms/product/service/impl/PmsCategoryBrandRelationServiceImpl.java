@@ -2,10 +2,9 @@ package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.ms.product.entity.PmsBrand;
-import com.ms.product.entity.PmsCategory;
-import com.ms.product.entity.PmsCategoryBrandRelation;
+import com.ms.product.domain.entity.PmsBrand;
+import com.ms.product.domain.entity.PmsCategory;
+import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 import com.ms.product.mapper.PmsBrandMapper;
 import com.ms.product.mapper.PmsCategoryBrandRelationMapper;
 import com.ms.product.mapper.PmsCategoryMapper;

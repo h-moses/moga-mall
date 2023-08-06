@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient("moga-search-service")
 public interface SearchFeignService {
 
-    @PostMapping("/search/product/onshelf")
+    @PostMapping("/search/product/on_shelf")
     Response upProductStatus(@RequestBody List<SkuEsModel> models);
 }

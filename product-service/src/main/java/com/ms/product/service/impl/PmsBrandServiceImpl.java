@@ -1,10 +1,10 @@
 package com.ms.product.service.impl;
 
-import com.ms.product.entity.PmsBrand;
+import com.ms.product.domain.entity.PmsBrand;
 import com.ms.product.mapper.PmsBrandMapper;
 import com.ms.product.service.IPmsBrandService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ms.product.vo.BrandParamVo;
+import com.ms.product.domain.vo.BrandParamVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

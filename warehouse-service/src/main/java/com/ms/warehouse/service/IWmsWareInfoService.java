@@ -1,7 +1,7 @@
 package com.ms.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.warehouse.entity.WmsWareInfo;
+import com.ms.warehouse.domain.entity.WmsWareInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

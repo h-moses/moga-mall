@@ -1,6 +1,6 @@
 package com.ms.product.mapper;
 
-import com.ms.product.entity.PmsSkuSaleAttrValue;
+import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

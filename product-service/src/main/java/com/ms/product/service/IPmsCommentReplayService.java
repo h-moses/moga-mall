@@ -1,6 +1,6 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsCommentReplay;
+import com.ms.product.domain.entity.PmsCommentReplay;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

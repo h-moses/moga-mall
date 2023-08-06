@@ -1,7 +1,7 @@
 package com.ms.product.service;
 
-import com.ms.product.dto.ProductDto;
-import com.ms.product.entity.Product;
+import com.ms.product.domain.dto.ProductDto;
+import com.ms.product.domain.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

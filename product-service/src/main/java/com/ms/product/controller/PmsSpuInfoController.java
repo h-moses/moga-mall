@@ -4,12 +4,11 @@ package com.ms.product.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
-import com.ms.product.entity.PmsSpuInfo;
+import com.ms.product.domain.entity.PmsSpuInfo;
 import com.ms.product.service.impl.PmsSpuInfoServiceImpl;
-import com.ms.product.vo.SaveSpuVo;
+import com.ms.product.domain.vo.SaveSpuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

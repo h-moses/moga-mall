@@ -1,10 +1,11 @@
 package com.ms.product.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.product.service.impl.PmsCategoryServiceImpl;
-import com.ms.product.vo.CategoryParamVo;
+import com.ms.product.domain.vo.CategoryParamVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,11 @@ public class PmsCategoryController {
     @ApiOperation(value = "查询所有分类，以树形结构展示")
     @GetMapping("/treelist")
     public Response treeList() {
-        return Response.SUCCESS(categoryService.getTreeList());
+        try {
+            return Response.SUCCESS(categoryService.getTreeList());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @ApiOperation(value = "删除分类")

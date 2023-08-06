@@ -1,8 +1,6 @@
 package com.ms.product.service.impl;
 
-import com.ms.common.enums.BizStatusCode;
-import com.ms.common.exception.BizException;
-import com.ms.product.entity.PmsSpuImages;
+import com.ms.product.domain.entity.PmsSpuImages;
 import com.ms.product.mapper.PmsSpuImagesMapper;
 import com.ms.product.service.IPmsSpuImagesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

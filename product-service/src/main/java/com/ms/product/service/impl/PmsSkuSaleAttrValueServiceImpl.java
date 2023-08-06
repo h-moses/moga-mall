@@ -1,6 +1,6 @@
 package com.ms.product.service.impl;
 
-import com.ms.product.entity.PmsSkuSaleAttrValue;
+import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import com.ms.product.mapper.PmsSkuSaleAttrValueMapper;
 import com.ms.product.service.IPmsSkuSaleAttrValueService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

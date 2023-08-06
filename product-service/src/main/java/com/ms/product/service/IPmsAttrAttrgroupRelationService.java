@@ -1,8 +1,8 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsAttrAttrgroupRelation;
+import com.ms.product.domain.entity.PmsAttrAttrgroupRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.product.vo.AttrGroupRelationParamVo;
+import com.ms.product.domain.vo.AttrGroupRelationParamVo;
 
 /**
  * <p>

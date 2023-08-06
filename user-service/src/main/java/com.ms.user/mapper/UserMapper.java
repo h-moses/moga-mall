@@ -1,7 +1,7 @@
 package com.ms.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ms.user.entity.User;
+import com.ms.user.domain.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

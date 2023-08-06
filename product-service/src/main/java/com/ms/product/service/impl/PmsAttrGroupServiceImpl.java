@@ -2,12 +2,12 @@ package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.product.entity.PmsAttr;
-import com.ms.product.entity.PmsAttrGroup;
+import com.ms.product.domain.entity.PmsAttr;
+import com.ms.product.domain.entity.PmsAttrGroup;
 import com.ms.product.mapper.PmsAttrGroupMapper;
 import com.ms.product.service.IPmsAttrGroupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ms.product.vo.AttrGroupDetailVo;
+import com.ms.product.domain.vo.AttrGroupDetailVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

@@ -3,10 +3,9 @@ package com.ms.warehouse.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
-import com.ms.warehouse.entity.WmsWareInfo;
-import com.ms.warehouse.entity.WmsWareSku;
+import com.ms.warehouse.domain.entity.WmsWareSku;
 import com.ms.warehouse.service.impl.WmsWareSkuServiceImpl;
-import com.ms.warehouse.vo.StockVo;
+import com.ms.warehouse.domain.vo.StockVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +46,7 @@ public class WmsWareSkuController {
     }
 
     @ApiOperation(value = "根据skuId获取库存")
-    @PostMapping("/getStock")
+    @PostMapping("/stock")
     public Response<List<StockVo>> HasStockBySkuId(@RequestBody List<Long> skuIds) {
         List<StockVo> stock = wareSkuService.isStock(skuIds);
         return Response.SUCCESS(stock);

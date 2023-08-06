@@ -2,8 +2,7 @@ package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.product.entity.PmsSkuInfo;
-import com.ms.product.entity.PmsSpuInfo;
+import com.ms.product.domain.entity.PmsSkuInfo;
 import com.ms.product.mapper.PmsSkuInfoMapper;
 import com.ms.product.service.IPmsSkuInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

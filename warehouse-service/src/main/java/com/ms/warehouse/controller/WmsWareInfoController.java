@@ -3,7 +3,7 @@ package com.ms.warehouse.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
-import com.ms.warehouse.entity.WmsWareInfo;
+import com.ms.warehouse.domain.entity.WmsWareInfo;
 import com.ms.warehouse.service.impl.WmsWareInfoServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
