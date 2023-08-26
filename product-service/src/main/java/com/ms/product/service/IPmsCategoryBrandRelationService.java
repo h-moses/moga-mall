@@ -1,7 +1,7 @@
 package com.ms.product.service;
 
-import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 
 import java.util.List;
 

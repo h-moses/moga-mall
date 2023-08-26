@@ -4,18 +4,14 @@ import com.ms.common.enums.SysExceptionCode;
 import com.ms.common.exception.SysException;
 import com.ms.product.service.IMinioService;
 import io.minio.*;
-import io.minio.errors.*;
 import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service

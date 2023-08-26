@@ -1,7 +1,7 @@
 package com.ms.product.mapper;
 
-import com.ms.product.domain.entity.PmsSpuInfoDesc;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ms.product.domain.entity.PmsSpuInfoDesc;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

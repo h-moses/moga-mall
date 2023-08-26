@@ -4,12 +4,14 @@ import com.ms.common.api.Response;
 import com.ms.search.domain.vo.SearchParamVo;
 import com.ms.search.domain.vo.SearchResVo;
 import com.ms.search.service.SearchService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+@Api(tags = "SearchController")
 @RequestMapping("/search")
 @RestController
 public class SearchController {

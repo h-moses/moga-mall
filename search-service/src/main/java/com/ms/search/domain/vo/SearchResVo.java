@@ -2,6 +2,7 @@ package com.ms.search.domain.vo;
 
 import com.ms.common.to.es.SkuEsModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -32,7 +33,8 @@ public class SearchResVo {
 
 
     @Data
-    static class Brand {
+    @Builder
+    public static class Brand {
         Long id;
 
         String brandName;
@@ -41,14 +43,16 @@ public class SearchResVo {
     }
 
     @Data
-    static class Category {
+    @Builder
+    public static class Category {
         Long id;
 
         String categoryName;
     }
 
     @Data
-    static class Attribute {
+    @Builder
+    public static class Attribute {
         Long id;
 
         String attrName;

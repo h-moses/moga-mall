@@ -3,12 +3,11 @@ package com.ms.product.controller;
 
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
-import com.ms.product.service.impl.PmsBrandServiceImpl;
 import com.ms.product.domain.vo.BrandParamVo;
+import com.ms.product.service.impl.PmsBrandServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

@@ -1,7 +1,7 @@
 package com.ms.warehouse.service;
 
-import com.ms.warehouse.domain.entity.WmsWareOrderTask;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.warehouse.domain.entity.WmsWareOrderTask;
 
 /**
  * <p>

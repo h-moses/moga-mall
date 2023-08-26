@@ -1,16 +1,8 @@
 package com.ms.common.constant;
 
-public enum IndexConstant  {
+public interface IndexConstant  {
 
-    PRODUCT("product");
+    String PRODUCT = "product";
 
-    private final String index;
-
-    IndexConstant(String index) {
-        this.index = index;
-    }
-
-    public String getIndex() {
-        return index;
-    }
+    Integer PRODUCT_PAGESIZE = 10;
 }

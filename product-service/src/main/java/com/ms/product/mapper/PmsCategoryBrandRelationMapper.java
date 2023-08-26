@@ -1,7 +1,7 @@
 package com.ms.product.mapper;
 
-import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ms.product.domain.entity.PmsCategoryBrandRelation;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

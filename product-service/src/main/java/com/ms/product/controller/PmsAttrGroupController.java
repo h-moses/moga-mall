@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
 import com.ms.product.domain.entity.PmsAttr;
 import com.ms.product.domain.entity.PmsAttrGroup;
+import com.ms.product.domain.vo.AttrGroupDetailVo;
+import com.ms.product.domain.vo.AttrGroupRelationParamVo;
 import com.ms.product.service.IPmsAttrAttrgroupRelationService;
 import com.ms.product.service.IPmsAttrGroupService;
 import com.ms.product.service.IPmsAttrService;
-import com.ms.product.domain.vo.AttrGroupDetailVo;
-import com.ms.product.domain.vo.AttrGroupRelationParamVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,13 +1,13 @@
 package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.common.exception.BizException;
 import com.ms.product.domain.dto.ProductDto;
 import com.ms.product.domain.entity.Product;
 import com.ms.product.mapper.ProductMapper;
 import com.ms.product.service.IProductService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

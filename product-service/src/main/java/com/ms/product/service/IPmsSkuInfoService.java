@@ -1,8 +1,8 @@
 package com.ms.product.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ms.product.domain.entity.PmsSkuInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.product.domain.entity.PmsSkuInfo;
 
 import java.util.List;
 

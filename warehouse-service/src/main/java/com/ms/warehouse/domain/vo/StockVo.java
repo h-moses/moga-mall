@@ -1,7 +1,6 @@
 package com.ms.warehouse.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import java.io.Serializable;
