@@ -1,8 +1,12 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.product.vo.CategoryParamVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ms.product.domain.dto.CategoryTreeDto;
+import com.ms.product.domain.entity.PmsCategory;
+import com.ms.product.domain.vo.CategoryParamVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,8 @@ import com.ms.product.vo.CategoryParamVo;
 public interface IPmsCategoryService extends IService<PmsCategory> {
 
     void updateCategory(CategoryParamVo categoryParamVo);
+
+    List<CategoryTreeDto> getTreeList() throws JsonProcessingException;
+
+    boolean deleteByIds(Integer[] ids);
 }

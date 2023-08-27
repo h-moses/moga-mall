@@ -1,7 +1,7 @@
 package com.ms.user.utils;
 
 import com.ms.common.utils.JwtUtils;
-import com.ms.user.entity.TokenPair;
+import com.ms.user.domain.entity.TokenPair;
 
 import java.util.Date;
 

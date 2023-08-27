@@ -2,22 +2,25 @@ package com.ms.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ms.common.api.Response;
+import com.ms.common.enums.ProductStatus;
 import com.ms.common.to.es.SkuEsModel;
-import com.ms.product.entity.*;
+import com.ms.product.domain.entity.*;
+import com.ms.product.domain.vo.*;
+import com.ms.product.feign.SearchFeignService;
+import com.ms.product.feign.WareFeignService;
 import com.ms.product.mapper.PmsSpuInfoMapper;
 import com.ms.product.service.IPmsSpuInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ms.product.vo.*;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +60,12 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
 
     @Resource
     PmsSkuSaleAttrValueServiceImpl skuSaleAttrValueService;
+
+    @Resource
+    WareFeignService wareFeignService;
+
+    @Resource
+    SearchFeignService searchFeignService;
 
     @Transactional
     @Override
@@ -136,8 +145,6 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
                 }).collect(Collectors.toList());
                 skuSaleAttrValueService.saveBatch(attrValueList);
             });
-
-
         }
     }
 
@@ -151,7 +158,6 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
 
     @Override
     public void upShelf(Long spuId) {
-        List<SkuEsModel> models = new ArrayList<>();
         List<PmsSkuInfo> infoList = skuInfoService.getSkuBySpuId(spuId);
 
         // 查询当前sku的所有可以用来被检索的规格属性
@@ -168,6 +174,10 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
             return attrs1;
         }).collect(Collectors.toList());
 
+        List<Long> skuIds = infoList.stream().map(PmsSkuInfo::getSkuId).collect(Collectors.toList());
+        Response<List<StockVo>> response = wareFeignService.HasStockBySkuId(skuIds);
+        List<StockVo> responseData = response.getData();
+        Map<Long, Boolean> stockMap = responseData.stream().collect(Collectors.toMap(StockVo::getSkuId, StockVo::getIsStocked));
 
         List<SkuEsModel> esModelList = infoList.stream().map(pmsSkuInfo -> {
             SkuEsModel skuEsModel = new SkuEsModel();
@@ -176,7 +186,7 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
             skuEsModel.setSkuImage(pmsSkuInfo.getSkuDefaultImg());
 
             // 查询库存系统是否有库存
-            skuEsModel.setHasStock(false);
+            skuEsModel.setHasStock(stockMap.get(pmsSkuInfo.getSkuId()));
             // 热度评分
             skuEsModel.setHotScore(0L);
 
@@ -193,6 +203,14 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
 //            productAttrValueService
             return skuEsModel;
         }).collect(Collectors.toList());
+
+        Response upProductStatus = searchFeignService.upProductStatus(esModelList);
+        if (upProductStatus.getCode() == 0) {
+            // 上架成功，修改当前spu的状态
+            baseMapper.updateStatus(spuId, ProductStatus.UP.ordinal());
+        } else {
+            // 重复调用，幂等性？
+        }
     }
 
     @Override

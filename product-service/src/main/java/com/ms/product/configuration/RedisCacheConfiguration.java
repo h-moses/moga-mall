@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +17,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
-
+@EnableConfigurationProperties(CacheProperties.class)
 @EnableCaching
 @Configuration
 public class RedisCacheConfiguration {
@@ -41,17 +42,16 @@ public class RedisCacheConfiguration {
     }
 
     @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory, CacheProperties cacheProperties) {
+        CacheProperties.Redis propertiesRedis = cacheProperties.getRedis();
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         org.springframework.data.redis.cache.RedisCacheConfiguration cacheConfiguration = org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig()
                 // 设置缓存过期时间为10分钟
-                .entryTtl(Duration.ofMinutes(10))
+                .entryTtl(propertiesRedis.getTimeToLive())
                 // 使用StringRedisSerializer来序列化和反序列化redis的key值
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
                 // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer()))
-                // 禁用空值
-                .disableCachingNullValues();
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer()));
 
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(cacheConfiguration)

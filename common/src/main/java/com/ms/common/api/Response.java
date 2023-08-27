@@ -29,7 +29,7 @@ public class Response<T> {
     }
 
     public static <T> Response<T> SUCCESS(T data) {
-        return new Response<>(0, "success", data);
+        return new Response<>(200, "success", data);
     }
 
     public static <T> Response<T> SUCCESS(BizStatusCode bizStatusCode) {

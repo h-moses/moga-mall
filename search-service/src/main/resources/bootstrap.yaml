@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: moga-search-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 4cea06b9-f119-48d0-8fa4-d79a17d21377 # 命名空间,默认为public
+        file-extension: yaml # 数据格式,默认为properties
+        config-retry-time: 5000
+        refresh-enabled: true
+        timeout: 3000
+#        extension-configs:
+#          - data-id: redis
+#            group: redis
+#            refresh: true
+#          - data-id: rabbit
+#            group: rabbit
+#            refresh: true

@@ -1,9 +1,9 @@
 package com.ms.warehouse.service.impl;
 
-import com.ms.warehouse.entity.WmsWareOrderTaskDetail;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ms.warehouse.domain.entity.WmsWareOrderTaskDetail;
 import com.ms.warehouse.mapper.WmsWareOrderTaskDetailMapper;
 import com.ms.warehouse.service.IWmsWareOrderTaskDetailService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

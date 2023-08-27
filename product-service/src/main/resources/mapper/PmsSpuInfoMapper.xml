@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.product.mapper.PmsSpuInfoMapper">
+
+    <update id="updateStatus">
+        update `pms_spu_info` set status=#{status}, update_time=NOW() where id=#{spuId}
+    </update>
+</mapper>

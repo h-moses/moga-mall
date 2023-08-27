@@ -1,6 +1,5 @@
 package com.ms.common.to.es;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import java.math.BigDecimal;

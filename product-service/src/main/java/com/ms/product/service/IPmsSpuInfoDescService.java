@@ -1,7 +1,7 @@
 package com.ms.product.service;
 
-import com.ms.product.entity.PmsSpuInfoDesc;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.product.domain.entity.PmsSpuInfoDesc;
 
 /**
  * <p>

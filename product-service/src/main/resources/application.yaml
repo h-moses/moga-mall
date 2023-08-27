@@ -15,13 +15,17 @@ spring:
       validation-query: SELECT 1
     username: root
     password: 802324
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
   cloud:
     nacos:
       discovery:
         server-addr: localhost:8848
-        namespace: 83fc6b20-4f5d-4b91-a645-04d3c32b337a
         username: nacos
         password: nacos
+        namespace: 4cea06b9-f119-48d0-8fa4-d79a17d21377
   devtools:
     livereload:
       port: 35730

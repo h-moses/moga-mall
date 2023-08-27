@@ -2,7 +2,9 @@ package com.ms.common.enums;
 
 public enum BizExceptionCode {
 
-    PARAM_ERROR(400, "参数错误");
+    PARAM_ERROR(400, "参数错误"),
+
+    ES_ERROR(5001, "ES查询错误");
 
     private final int code;
     private final String message;
