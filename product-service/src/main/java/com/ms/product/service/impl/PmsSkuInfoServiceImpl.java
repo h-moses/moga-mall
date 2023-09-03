@@ -49,4 +49,10 @@ public class PmsSkuInfoServiceImpl extends ServiceImpl<PmsSkuInfoMapper, PmsSkuI
         Page<PmsSkuInfo> infoPage = new Page<>(pageNum, pageSize);
         return page(infoPage, queryWrapper);
     }
+
+    @Override
+    public PmsSkuInfo getSkuInfoBySkuId(Long skuId) {
+        LambdaQueryWrapper<PmsSkuInfo> wrapper = new LambdaQueryWrapper<PmsSkuInfo>().eq(PmsSkuInfo::getSkuId, skuId);
+        return getOne(wrapper);
+    }
 }

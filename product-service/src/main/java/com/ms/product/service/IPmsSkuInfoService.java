@@ -21,4 +21,6 @@ public interface IPmsSkuInfoService extends IService<PmsSkuInfo> {
     void saveSkuInfo(PmsSkuInfo pmsSkuInfo);
 
     Page<PmsSkuInfo> searchSku(String key, Long categoryId, Long brandId, Integer pageNum, Integer pageSize);
+
+    PmsSkuInfo getSkuInfoBySkuId(Long skuId);
 }

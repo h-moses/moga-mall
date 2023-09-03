@@ -1,5 +1,6 @@
 package com.ms.gateway.filter;
 
+import com.google.common.collect.ImmutableList;
 import com.ms.common.constant.AuthConstant;
 import com.ms.common.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class AuthGlobalFilter implements GlobalFilter {
 
-    private static final List<String> IGNORE_URLS = Arrays.asList(
+    private static final List<String> IGNORE_URLS = ImmutableList.of(
             "/user/register",
             "/user/login",
             "/category/treelist"

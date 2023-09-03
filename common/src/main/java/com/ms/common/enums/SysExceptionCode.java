@@ -6,8 +6,8 @@ public enum SysExceptionCode {
     UPDATE_DB_ERROR(701, "更新数据库失败"),
     UPLOAD_OSS_ERROR(702, "上传文件失败"),
     URL_NOT_EXIST(703, "文件链接不存在"),
-
-    PRODUCT_ON_SHELF_ERROR(704, "商品上架异常");
+    PRODUCT_ON_SHELF_ERROR(704, "商品上架异常"),
+    PRODUCT_ADD_TO_CART_ERROR(705, "商品添加异常"),;
 
     private final int code;
     private final String message;

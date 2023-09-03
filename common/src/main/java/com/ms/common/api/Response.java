@@ -39,4 +39,8 @@ public class Response<T> {
     public static <T> Response<T> ERROR(int code, String message) {
         return new Response<>(code, message, null);
     }
+
+    public static <T> Response<T> ERROR(BizStatusCode bizStatusCode) {
+        return new Response<>(bizStatusCode.getCode(), bizStatusCode.getMessage(), null);
+    }
 }
