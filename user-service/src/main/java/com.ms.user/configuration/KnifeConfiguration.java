@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 @EnableSwagger2WebMvc
 public class KnifeConfiguration {
 
-    @Bean(value = "dockerBean")
-    public Docket dockerBean() {
+    @Bean(value = "userDoc")
+    public Docket userDoc() {
         //指定使用Swagger2规范
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "TokenPair对象", description = "登录接口返回的token对")
+@ApiModel(description = "登录接口返回的token对")
 public class TokenPair implements Serializable {
 
     private static final long serialVersionUID = -8614711611496998950L;
