@@ -3,6 +3,7 @@ package com.ms.product.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface PmsSkuSaleAttrValueMapper extends BaseMapper<PmsSkuSaleAttrValue> {
+
+    String querySaleAttr(@Param("skuId") Long skuId);
 
 }

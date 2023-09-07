@@ -1,9 +1,9 @@
 package com.ms.product.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import com.ms.product.mapper.PmsSkuSaleAttrValueMapper;
-import com.ms.product.service.IPmsSkuSaleAttrValueService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2023-07-01
  */
 @Service
-public class PmsSkuSaleAttrValueServiceImpl extends ServiceImpl<PmsSkuSaleAttrValueMapper, PmsSkuSaleAttrValue> implements IPmsSkuSaleAttrValueService {
+public class PmsSkuSaleAttrValueServiceImpl extends ServiceImpl<PmsSkuSaleAttrValueMapper, PmsSkuSaleAttrValue> implements IService<PmsSkuSaleAttrValue> {
 
 }

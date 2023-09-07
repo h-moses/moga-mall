@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  * @since 2023-07-01
  */
 @RestController
-@RequestMapping("/pms-sku-info")
+@RequestMapping("/product/sku")
 public class PmsSkuInfoController {
 
     @Resource
@@ -37,5 +37,11 @@ public class PmsSkuInfoController {
                            @RequestParam("pageSize") Integer pageSize) {
         Page<PmsSkuInfo> infoPage = skuInfoService.searchSku(key, categoryId, brandId, pageNum, pageSize);
         return Response.SUCCESS(infoPage);
+    }
+
+    @ApiOperation(value = "根据skuId获取信息")
+    @GetMapping("/info")
+    public Response info(@RequestParam("skuId") Long skuId) {
+        return Response.SUCCESS(skuInfoService.getSkuInfoBySkuId(skuId));
     }
 }

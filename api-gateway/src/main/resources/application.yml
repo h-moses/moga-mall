@@ -26,6 +26,13 @@ spring:
             - Path=/api/user/**
           filters:
             - StripPrefix=1
+        - id: cart-service
+          uri: lb://moga-cart-service
+          order: 1
+          predicates:
+            - Path=/api/cart/**
+          filters:
+            - StripPrefix=1
         - id: product-service
           uri: lb://moga-product-service
           order: 1
