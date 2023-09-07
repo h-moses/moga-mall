@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "UserRegisterParamVo", description = "用户注册接收参数")
+@ApiModel(description = "用户注册接收参数")
 public class UserRegisterParamVo {
 
     @ApiModelProperty("用户名")

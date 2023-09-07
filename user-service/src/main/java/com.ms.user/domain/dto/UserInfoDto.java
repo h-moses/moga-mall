@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "UserInfoDto", description = "个人信息查询对象")
+@ApiModel(description = "个人展示信息")
 public class UserInfoDto implements Serializable {
 
     private static final long serialVersionUID = 1757393376481919506L;

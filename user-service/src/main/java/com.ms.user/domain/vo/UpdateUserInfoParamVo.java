@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "UpdateUserInfoParamVo", description = "个人信息修改接收参数")
+@ApiModel(description = "个人信息修改接收参数")
 public class UpdateUserInfoParamVo {
 
     @ApiModelProperty("昵称")
