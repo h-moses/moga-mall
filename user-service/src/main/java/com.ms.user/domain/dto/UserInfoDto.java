@@ -14,7 +14,7 @@ public class UserInfoDto implements Serializable {
     private static final long serialVersionUID = 1757393376481919506L;
 
     @ApiModelProperty("用户ID")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("用户名")
     private String username;

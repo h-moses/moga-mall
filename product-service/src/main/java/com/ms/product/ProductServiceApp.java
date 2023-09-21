@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ProductServiceApp {
-
     public static void main(String[] args) {
         SpringApplication.run(ProductServiceApp.class, args);
     }

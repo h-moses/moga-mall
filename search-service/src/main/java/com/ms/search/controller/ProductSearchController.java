@@ -2,7 +2,7 @@ package com.ms.search.controller;
 
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 import com.ms.search.service.ProductSearchService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

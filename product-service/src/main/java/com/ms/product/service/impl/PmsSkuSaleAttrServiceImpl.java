@@ -6,10 +6,12 @@ import com.ms.product.mapper.PmsSkuSaleAttrValueMapper;
 import com.ms.product.service.IPmsSkuSaleAttrService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PmsSkuSaleAttrServiceImpl  extends ServiceImpl<PmsSkuSaleAttrValueMapper, PmsSkuSaleAttrValue> implements IPmsSkuSaleAttrService {
     @Override
-    public String querySaleAttr(Long skuId) {
+    public List<String> querySaleAttr(Long skuId) {
         return getBaseMapper().querySaleAttr(skuId);
     }
 }

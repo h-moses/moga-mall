@@ -1,4 +1,4 @@
-package com.ms.common.to.es;
+package com.ms.common.to;
 
 import lombok.Data;
 

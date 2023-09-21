@@ -23,20 +23,20 @@ import java.util.stream.Collectors;
 @EnableSwagger2WebMvc
 public class KnifeConfiguration {
 
-    @Bean(value = "cartDoc")
-    public Docket cartDoc() {
+    @Bean(value = "productDoc")
+    public Docket productDoc() {
         //指定使用Swagger2规范
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
                         //描述字段支持Markdown语法
-                        .description("# 购物车服务 API")
+                        .description("# 商品服务 API")
                         .version("1.0")
                         .build())
                 //分组名称
-                .groupName("cart-service")
+                .groupName("product-service")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.ms.cart.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ms.product.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

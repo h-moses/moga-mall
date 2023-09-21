@@ -1,6 +1,6 @@
 package com.ms.search.domain.vo;
 
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;

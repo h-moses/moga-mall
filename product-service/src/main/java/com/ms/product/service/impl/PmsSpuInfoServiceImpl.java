@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.api.Response;
 import com.ms.common.enums.ProductStatus;
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 import com.ms.product.domain.entity.*;
 import com.ms.product.domain.vo.*;
 import com.ms.product.feign.SearchFeignService;
@@ -228,5 +228,11 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
         }
         Page<PmsSpuInfo> infoPage = new Page<>(pageNum, pageSize);
         return page(infoPage, queryWrapper);
+    }
+
+    @Override
+    public PmsSpuInfo querySpuInfoBySkuId(Long skuId) {
+        PmsSkuInfo skuInfo = skuInfoService.getById(skuId);
+        return getById(skuInfo.getSpuId());
     }
 }

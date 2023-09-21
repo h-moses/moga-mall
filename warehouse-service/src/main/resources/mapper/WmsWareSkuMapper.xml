@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ms.warehouse.mapper.WmsWareSkuMapper">
+    <update id="lockStock">
+        update wms_ware_sku set stock_locked=stock_locked+#{quantity}
+        where sku_id=#{skuId} and ware_id=#{wareId} and stock-wms_ware_sku.stock_locked>=#{quantity}
+    </update>
 
     <select id="getStock" resultType="java.lang.Long">
         select SUM(stock - stock_locked)
         from `wms_ware_sku` where sku_id = #{skuId}
+    </select>
+
+    <select id="listWareId" resultType="java.lang.Long">
+        select ware_id from wms_ware_sku where sku_id=#{skuId} and stock - wms_ware_sku.stock_locked > 0
     </select>
 
 </mapper>

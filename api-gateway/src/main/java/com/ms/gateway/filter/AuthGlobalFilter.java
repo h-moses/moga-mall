@@ -32,6 +32,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         if (IGNORE_URLS.contains(path)) {
             return chain.filter(exchange);
         }
+        log.info("访问路径：{}", path);
         String token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_HEADER);
         if (!StringUtils.hasText(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -39,9 +40,9 @@ public class AuthGlobalFilter implements GlobalFilter {
         }
         String realToken = token.replace(AuthConstant.JWT_PREFIX, "");
         if (JwtUtils.validateToken(realToken)) {
-            String username = JwtUtils.getSubjectFromToken(realToken);
+            String claim = JwtUtils.getSubjectFromToken(realToken);
             // token合法，从中取出用户信息，交由用户服务
-            exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, username);
+            exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, claim);
             return chain.filter(exchange);
         } else {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

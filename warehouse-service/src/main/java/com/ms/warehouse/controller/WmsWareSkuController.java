@@ -3,9 +3,14 @@ package com.ms.warehouse.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
+import com.ms.common.enums.BizStatusCode;
+import com.ms.common.exception.BizException;
 import com.ms.warehouse.domain.entity.WmsWareSku;
+import com.ms.warehouse.domain.vo.StockLockResVo;
+import com.ms.warehouse.domain.vo.StockLockVo;
 import com.ms.warehouse.domain.vo.StockVo;
 import com.ms.warehouse.service.impl.WmsWareSkuServiceImpl;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +25,8 @@ import java.util.List;
  * @author ms
  * @since 2023-07-09
  */
+
+@Api(value = "商品库存")
 @RestController
 @RequestMapping("/warehouse/sku")
 public class WmsWareSkuController {
@@ -36,8 +43,8 @@ public class WmsWareSkuController {
      * @param pageSize
      * @return
      */
-    @GetMapping("/ware/sku")
-    public Response pageQuery(@RequestParam("skuId") Long skuId,
+    @GetMapping("/stock-detail")
+    public Response<Page<WmsWareSku>> pageQuery(@RequestParam("skuId") Long skuId,
                               @RequestParam("wareId") Long wareId,
                               @RequestParam("pageNum") Integer pageNum,
                               @RequestParam("pageSize") Integer pageSize) {
@@ -50,5 +57,16 @@ public class WmsWareSkuController {
     public Response<List<StockVo>> HasStockBySkuId(@RequestBody List<Long> skuIds) {
         List<StockVo> stock = wareSkuService.isStock(skuIds);
         return Response.SUCCESS(stock);
+    }
+
+    @ApiOperation(value = "库存锁定")
+    @PostMapping("/stock/lock")
+    public Response<List<StockLockResVo>> lockStock(@RequestBody StockLockVo stockLockVo) {
+        try {
+            wareSkuService.lockStock(stockLockVo);
+            return Response.SUCCESS(BizStatusCode.SUCCESS);
+        } catch (BizException e) {
+            return Response.ERROR(BizStatusCode.INSUFFICIENT_STOCK);
+        }
     }
 }

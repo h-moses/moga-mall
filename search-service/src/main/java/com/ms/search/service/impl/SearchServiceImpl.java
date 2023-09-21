@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ms.common.constant.IndexConstant;
 import com.ms.common.enums.BizExceptionCode;
 import com.ms.common.exception.BizException;
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 import com.ms.search.domain.vo.SearchParamVo;
 import com.ms.search.domain.vo.SearchResVo;
 import com.ms.search.service.SearchService;

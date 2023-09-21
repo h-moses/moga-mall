@@ -2,11 +2,9 @@ server:
   port: 8001
 
 spring:
-  application:
-    name: moga-user-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/moga-mall-ums?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/moga_mall_ums?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
     druid:
       min-idle: 1
       max-wait: -1

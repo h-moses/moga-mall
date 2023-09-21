@@ -5,6 +5,8 @@ import com.ms.product.domain.entity.PmsSkuSaleAttrValue;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * sku销售属性&值 Mapper 接口
@@ -16,6 +18,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface PmsSkuSaleAttrValueMapper extends BaseMapper<PmsSkuSaleAttrValue> {
 
-    String querySaleAttr(@Param("skuId") Long skuId);
+    List<String> querySaleAttr(@Param("skuId") Long skuId);
 
 }

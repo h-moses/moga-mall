@@ -20,4 +20,6 @@ public interface IPmsSpuInfoService extends IService<PmsSpuInfo> {
     void upShelf(Long spuId);
 
     Page<PmsSpuInfo> searchSpu(String key, Long categoryId, Long brandId, Integer pageNum, Integer pageSize);
+
+    PmsSpuInfo querySpuInfoBySkuId(Long skuId);
 }

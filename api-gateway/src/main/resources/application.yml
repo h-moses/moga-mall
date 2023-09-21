@@ -40,6 +40,13 @@ spring:
             - Path=/api/product/**
           filters:
             - StripPrefix=1
+        - id: order-service
+          uri: lb://moga-order-service
+          order: 1
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=1
         - id: brand-service
           uri: lb://moga-product-service
           order: 1
@@ -53,7 +60,7 @@ spring:
           predicates:
             - Path=/api/category/**
           filters:
-            - StripPrefix=1,2
+            - StripPrefix=1
   devtools:
     livereload:
       port: 35734

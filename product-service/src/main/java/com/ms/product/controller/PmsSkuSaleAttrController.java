@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -18,11 +19,9 @@ public class PmsSkuSaleAttrController {
     @Resource
     IPmsSkuSaleAttrService skuSaleAttrService;
 
-    @Resource
-
     @GetMapping("/info/{skuId}")
     public Response querySaleAttr(@PathVariable("skuId") Long skuId) {
-        String s = skuSaleAttrService.querySaleAttr(skuId);
+        List<String> s = skuSaleAttrService.querySaleAttr(skuId);
         return Response.SUCCESS(s);
     }
 }

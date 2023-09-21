@@ -5,7 +5,7 @@ import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import com.ms.common.constant.IndexConstant;
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 import com.ms.search.service.ProductSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

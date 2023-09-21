@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName("wms_ware_sku")
-@ApiModel(value = "WmsWareSku对象", description = "商品库存")
+@ApiModel( description = "商品库存")
 public class WmsWareSku implements Serializable {
 
     private static final long serialVersionUID = 1L;

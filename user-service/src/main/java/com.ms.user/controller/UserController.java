@@ -1,6 +1,7 @@
 package com.ms.user.controller;
 
 
+import cn.hutool.system.UserInfo;
 import com.ms.common.api.Response;
 import com.ms.common.constant.AuthConstant;
 import com.ms.common.enums.BizStatusCode;
@@ -45,11 +46,8 @@ public class UserController {
     @PostMapping("/login")
     public Response<TokenPair> login(@NotBlank @RequestParam("username") String username,
                                      @NotBlank @RequestParam("password") String password) {
-        Object res = userService.login(username, password);
-        if (res.getClass().isAssignableFrom(UserInfoDto.class)) {
-            return Response.SUCCESS(TokenUtils.generateTokenPair(((UserInfoDto) res).getUsername()));
-        }
-        return Response.SUCCESS((BizStatusCode) res);
+        UserInfoDto res = userService.login(username, password);
+        return Response.SUCCESS(TokenUtils.generateTokenPair(res.getId(), res.getUsername()));
     }
 
     @ApiOperation(value = "个人信息修改接口")

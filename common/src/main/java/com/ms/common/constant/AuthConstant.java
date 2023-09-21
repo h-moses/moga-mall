@@ -16,5 +16,7 @@ public interface AuthConstant {
 
     String JWT_HEADER = "Authorization";
 
+//    String USERID_HEADER = "userId";
+
     String USER_HEADER = "username";
 }
