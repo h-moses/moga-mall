@@ -1,7 +1,7 @@
 package com.ms.warehouse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ms.warehouse.domain.entity.WmsWareOrderTaskDetail;
+import com.ms.warehouse.domain.entity.WareOrderTaskDetailEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-07-09
  */
 @Mapper
-public interface WmsWareOrderTaskDetailMapper extends BaseMapper<WmsWareOrderTaskDetail> {
+public interface WmsWareOrderTaskDetailMapper extends BaseMapper<WareOrderTaskDetailEntity> {
 
 }

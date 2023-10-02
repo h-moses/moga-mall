@@ -1,7 +1,7 @@
 package com.ms.order.mapper;
 
-import com.ms.order.entity.OmsOrderOperateHistory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ms.order.entity.OmsOrderOperateHistory;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -3,7 +3,6 @@ package com.ms.common.to;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 public class StockLockTo implements Serializable {

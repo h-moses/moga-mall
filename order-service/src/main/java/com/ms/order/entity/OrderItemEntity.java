@@ -3,12 +3,13 @@ package com.ms.order.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.math.BigDecimal;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Setter
 @TableName("oms_order_item")
 @ApiModel(value = "OmsOrderItem对象", description = "订单项信息")
-public class OmsOrderItem implements Serializable {
+public class OrderItemEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

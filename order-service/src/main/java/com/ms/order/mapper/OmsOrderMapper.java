@@ -1,7 +1,7 @@
 package com.ms.order.mapper;
 
-import com.ms.order.entity.OmsOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ms.order.entity.OrderEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-09-07
  */
 @Mapper
-public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
+public interface OmsOrderMapper extends BaseMapper<OrderEntity> {
 
 }

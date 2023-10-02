@@ -90,4 +90,12 @@ public enum OrderStatus {
     public boolean isDelivered() {
         return this == DELIVERED;
     }
+
+    /**
+     * 判断当前订单状态是否已送达，如果订单状态为 DELIVERED，则已送达，否则未送达。
+     * @return 是否已送达
+     */
+    public boolean isCancelled() {
+        return this == CANCELLED;
+    }
 }

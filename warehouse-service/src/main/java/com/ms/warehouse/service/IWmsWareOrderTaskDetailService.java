@@ -1,7 +1,7 @@
 package com.ms.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ms.warehouse.domain.entity.WmsWareOrderTaskDetail;
+import com.ms.warehouse.domain.entity.WareOrderTaskDetailEntity;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.ms.warehouse.domain.entity.WmsWareOrderTaskDetail;
  * @author ms
  * @since 2023-07-09
  */
-public interface IWmsWareOrderTaskDetailService extends IService<WmsWareOrderTaskDetail> {
+public interface IWmsWareOrderTaskDetailService extends IService<WareOrderTaskDetailEntity> {
 
 }

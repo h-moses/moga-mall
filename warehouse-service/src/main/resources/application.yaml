@@ -32,6 +32,9 @@ spring:
   rabbitmq:
     username: admin
     password: admin
+    listener:
+      simple:
+        acknowledge-mode: manual
 management:
   endpoints:
     web:

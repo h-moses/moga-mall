@@ -2,13 +2,15 @@ package com.ms.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.common.to.OrderTo;
 import com.ms.common.to.StockLockTo;
-import com.ms.warehouse.domain.entity.WmsWareSku;
-import com.ms.warehouse.domain.vo.StockLockResVo;
+import com.ms.warehouse.domain.entity.WareSkuEntity;
 import com.ms.warehouse.domain.vo.StockLockVo;
 import com.ms.warehouse.domain.vo.StockVo;
+import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -19,13 +21,15 @@ import java.util.List;
  * @author ms
  * @since 2023-07-09
  */
-public interface IWmsWareSkuService extends IService<WmsWareSku> {
+public interface IWmsWareSkuService extends IService<WareSkuEntity> {
 
-    Page<WmsWareSku> queryPage(Long skuId, Long wareId, Integer pageNum, Integer pageSize);
+    Page<WareSkuEntity> queryPage(Long skuId, Long wareId, Integer pageNum, Integer pageSize);
 
     List<StockVo> isStock(List<Long> skuIds);
 
     Boolean lockStock(StockLockVo stockLockVo);
 
-    void releaseStock(StockLockTo stockLockTo, Message message);
+    void releaseStock(StockLockTo stockLockTo, Message message, Channel channel) throws IOException;
+
+    void releaseStockOnOrderClosed(OrderTo orderTo, Message message);
 }

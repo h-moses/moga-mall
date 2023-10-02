@@ -1,7 +1,7 @@
 package com.ms.warehouse.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ms.warehouse.domain.entity.WmsWareOrderTaskDetail;
+import com.ms.warehouse.domain.entity.WareOrderTaskDetailEntity;
 import com.ms.warehouse.mapper.WmsWareOrderTaskDetailMapper;
 import com.ms.warehouse.service.IWmsWareOrderTaskDetailService;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2023-07-09
  */
 @Service
-public class WmsWareOrderTaskDetailServiceImpl extends ServiceImpl<WmsWareOrderTaskDetailMapper, WmsWareOrderTaskDetail> implements IWmsWareOrderTaskDetailService {
+public class WmsWareOrderTaskDetailServiceImpl extends ServiceImpl<WmsWareOrderTaskDetailMapper, WareOrderTaskDetailEntity> implements IWmsWareOrderTaskDetailService {
 
 }

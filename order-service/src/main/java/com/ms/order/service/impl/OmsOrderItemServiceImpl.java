@@ -1,9 +1,9 @@
 package com.ms.order.service.impl;
 
-import com.ms.order.entity.OmsOrderItem;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ms.order.entity.OrderItemEntity;
 import com.ms.order.mapper.OmsOrderItemMapper;
 import com.ms.order.service.IOmsOrderItemService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2023-09-07
  */
 @Service
-public class OmsOrderItemServiceImpl extends ServiceImpl<OmsOrderItemMapper, OmsOrderItem> implements IOmsOrderItemService {
+public class OmsOrderItemServiceImpl extends ServiceImpl<OmsOrderItemMapper, OrderItemEntity> implements IOmsOrderItemService {
 
 }

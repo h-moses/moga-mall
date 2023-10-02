@@ -13,4 +13,5 @@ import com.ms.warehouse.domain.entity.WmsWareOrderTask;
  */
 public interface IWmsWareOrderTaskService extends IService<WmsWareOrderTask> {
 
+    WmsWareOrderTask queryTaskByOrderSn(String orderSn);
 }

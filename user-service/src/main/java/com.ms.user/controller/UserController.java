@@ -1,10 +1,8 @@
 package com.ms.user.controller;
 
 
-import cn.hutool.system.UserInfo;
 import com.ms.common.api.Response;
 import com.ms.common.constant.AuthConstant;
-import com.ms.common.enums.BizStatusCode;
 import com.ms.user.domain.dto.UserInfoDto;
 import com.ms.user.domain.entity.TokenPair;
 import com.ms.user.domain.vo.UpdateUserInfoParamVo;

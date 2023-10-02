@@ -1,6 +1,7 @@
 package com.ms.order.feign;
 
 import com.ms.common.api.Response;
+import com.ms.order.interceptor.CustomFeignInterceptor;
 import com.ms.order.vo.StockLockResVo;
 import com.ms.order.vo.StockLockVo;
 import com.ms.order.vo.StockVo;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient("moga-warehouse-service")
+@FeignClient(value = "moga-warehouse-service", configuration = CustomFeignInterceptor.class)
 public interface WarehouseServiceFeign {
 
 
@@ -18,6 +19,6 @@ public interface WarehouseServiceFeign {
     Response<List<StockVo>> HasStockBySkuId(@RequestBody List<Long> skuIds);
 
 
-    @PostMapping("/stock/lock")
+    @PostMapping("/warehouse/sku/stock/lock")
     Response<List<StockLockResVo>> lockStock(@RequestBody StockLockVo stockLockVo);
 }

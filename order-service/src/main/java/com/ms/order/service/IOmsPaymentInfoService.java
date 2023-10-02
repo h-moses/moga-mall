@@ -1,7 +1,7 @@
 package com.ms.order.service;
 
-import com.ms.order.entity.OmsPaymentInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.order.entity.PaymentInfoEntity;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author ms
  * @since 2023-09-07
  */
-public interface IOmsPaymentInfoService extends IService<OmsPaymentInfo> {
+public interface IOmsPaymentInfoService extends IService<PaymentInfoEntity> {
 
 }

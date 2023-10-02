@@ -1,12 +1,10 @@
 package com.ms.order.configuration;
 
-import com.ms.order.entity.OmsOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.CustomExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,10 +28,10 @@ public class RabbitConfiguration {
     public static final Integer MESSAGE_TIME_OUT = 60000;
 
     @Bean
-    public CustomExchange orderEventExchange() {
-        Map<String, Object> argument = new HashMap<>();
-        argument.put("x-delayed-type", "direct");
-        return new CustomExchange(ORDER_EVENT_EXCHANGE, "x-delayed-message", true, false, argument);
+    public TopicExchange orderEventExchange() {
+//        Map<String, Object> argument = new HashMap<>();
+//        argument.put("x-delayed-type", "direct");
+        return new TopicExchange(ORDER_EVENT_EXCHANGE, true, false, null);
     }
 
     @Bean
@@ -51,17 +49,18 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Binding cancelQueueBinding(CustomExchange orderEventExchange, Queue cancelOrderQueue) {
-        return BindingBuilder.bind(cancelOrderQueue).to(orderEventExchange).with(CANCEL_ROUTING_KEY).noargs();
+    public Binding cancelQueueBinding(TopicExchange orderEventExchange, Queue cancelOrderQueue) {
+        return BindingBuilder.bind(cancelOrderQueue).to(orderEventExchange).with(CANCEL_ROUTING_KEY);
     }
 
     @Bean
-    public Binding createQueueBinding(CustomExchange orderEventExchange, Queue delayOrderQueue) {
-        return BindingBuilder.bind(delayOrderQueue).to(orderEventExchange).with(CREATE_ROUTING_KEY).noargs();
+    public Binding createQueueBinding(TopicExchange orderEventExchange, Queue delayOrderQueue) {
+        return BindingBuilder.bind(delayOrderQueue).to(orderEventExchange).with(CREATE_ROUTING_KEY);
     }
 
-    @RabbitListener(queues = ORDER_CANCEL_QUEUE)
-    public void handleCancelOrderEvent(OmsOrder order) {
-        log.info("收到取消订单的消息，订单编号：{}", order.getOrderSn());
+    @Bean
+    public Binding stockQueueBinding() {
+        return new Binding("stock-release-queue", Binding.DestinationType.QUEUE, ORDER_EVENT_EXCHANGE, CANCEL_ROUTING_KEY, null);
     }
+
 }

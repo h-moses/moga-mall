@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +47,7 @@ public class CartServiceImpl implements CartService {
             if (StringUtils.hasText(product)) {
                 CartItem cartItem = JSON.parseObject(product, CartItem.class);
                 cartItem.setCount(cartItem.getCount() + quantity);
-                operations.put(productId, JSON.toJSONString(cartItem));
+                operations.put(productId.toString(), JSON.toJSONString(cartItem));
             } else {
                 final CartItem cartItem = new CartItem();
                 // 远程查询商品信息

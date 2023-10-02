@@ -1,13 +1,12 @@
 package com.ms.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ms.common.utils.BeanUtils;
-import com.ms.user.domain.vo.UserAddressVo;
-import com.ms.user.service.IUmsDeliveryAddressService;
-import com.ms.user.domain.entity.UmsDeliveryAddress;
-import com.ms.user.mapper.UmsDeliveryAddressMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.context.annotation.Bean;
+import com.ms.common.utils.BeanUtils;
+import com.ms.user.domain.entity.UmsDeliveryAddress;
+import com.ms.user.domain.vo.UserAddressVo;
+import com.ms.user.mapper.UmsDeliveryAddressMapper;
+import com.ms.user.service.IUmsDeliveryAddressService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ms.order.interceptor;
+package com.ms.warehouse.interceptor;
 
 import com.ms.common.constant.AuthConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Component
-public class OrderInterceptor implements HandlerInterceptor {
+public class WarehouseInterceptor implements HandlerInterceptor {
 
-    public static final ThreadLocal<String> THREAD_LOCAL_ORDER = new ThreadLocal<>();
+    public static final ThreadLocal<String> THREAD_LOCAL_STOCK = new ThreadLocal<>();
 
     private static final String[] WHITE_URL_LIST = {
             "/doc.html",
@@ -22,8 +22,7 @@ public class OrderInterceptor implements HandlerInterceptor {
             "/webjars/css/*",
             "/webjars/js/*",
             "/error",
-            "/swagger-resources",
-            "/order/info/*"
+            "/swagger-resources"
     };
 
     private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
@@ -39,10 +38,10 @@ public class OrderInterceptor implements HandlerInterceptor {
         }
         String claim = request.getHeader(AuthConstant.USER_HEADER);
         if (StringUtils.hasText(claim)) {
-            THREAD_LOCAL_ORDER.set(claim);
+            THREAD_LOCAL_STOCK.set(claim);
             return true;
         }
-        log.warn("用户尚未认证，不可进入订单系统");
+        log.warn("用户尚未认证，不可进入库存系统");
         return false;
     }
 }

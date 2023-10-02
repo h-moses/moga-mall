@@ -1,12 +1,13 @@
 package com.ms.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -19,8 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("mq_message")
-@ApiModel( description = "RabbitMQ的消息内容")
-public class MqMessage implements Serializable {
+@ApiModel(description = "RabbitMQ的消息内容")
+public class RabbitMessageEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

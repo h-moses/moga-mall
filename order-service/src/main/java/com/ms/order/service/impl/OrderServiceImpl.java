@@ -1,28 +1,28 @@
 package com.ms.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.common.api.Response;
 import com.ms.common.constant.RedisKey;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.common.enums.OrderStatus;
+import com.ms.common.to.OrderTo;
 import com.ms.common.utils.BeanUtils;
-import com.ms.order.configuration.ThreadConfiguration;
-import com.ms.order.entity.OmsOrder;
-import com.ms.order.entity.OmsOrderItem;
+import com.ms.order.configuration.RabbitConfiguration;
+import com.ms.order.entity.OrderEntity;
+import com.ms.order.entity.OrderItemEntity;
 import com.ms.order.feign.CartServiceFeign;
 import com.ms.order.feign.ProductServiceFeign;
 import com.ms.order.feign.UserServiceFeign;
 import com.ms.order.feign.WarehouseServiceFeign;
 import com.ms.order.interceptor.OrderInterceptor;
-import com.ms.order.mapper.OmsOrderItemMapper;
 import com.ms.order.mapper.OmsOrderMapper;
 import com.ms.order.service.IOmsOrderItemService;
-import com.ms.order.service.IOmsOrderService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ms.order.service.IOrderService;
 import com.ms.order.to.OrderCreationTo;
 import com.ms.order.vo.*;
-import io.seata.spring.annotation.GlobalTransactional;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * @since 2023-09-07
  */
 @Service
-public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> implements IOmsOrderService {
+public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> implements IOrderService {
 
     ThreadLocal<OrderSubmitVo> submitVoThreadLocal = new ThreadLocal<>();
 
@@ -73,7 +73,41 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     StringRedisTemplate redisTemplate;
 
     @Resource
+    RabbitTemplate rabbitTemplate;
+
+    @Resource
     IOmsOrderItemService orderItemService;
+
+    @Override
+    public OrderEntity queryOrderStatus(String orderSn) {
+        return getOne(new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getOrderSn, orderSn));
+    }
+
+    /**
+     * 定时关闭订单
+     * @param order
+     */
+    @Override
+    public void closeOrder(OrderEntity order) {
+        OrderEntity orderEntity = getById(order.getId());
+        if (OrderStatus.CREATED.getCode() == orderEntity.getStatus()) {
+            OrderEntity newOrder = new OrderEntity();
+            newOrder.setId(orderEntity.getId());
+            newOrder.setStatus(OrderStatus.CANCELLED.getCode());
+            updateById(newOrder);
+
+            // 如果因网络等原因，导致库存先于订单解锁，会出现问题，直接发送一条消息给库存队列
+            OrderTo orderTo = new OrderTo();
+            org.springframework.beans.BeanUtils.copyProperties(order, orderTo);
+            try {
+                // 创建一张消息记录表
+                rabbitTemplate.convertAndSend(RabbitConfiguration.ORDER_EVENT_EXCHANGE, RabbitConfiguration.CANCEL_ROUTING_KEY, orderTo);
+            } catch (Exception e) {
+                // 保证可靠消息
+
+            }
+        }
+    }
 
     @Override
     public OrderDetailVo queryOrderDetail() throws ExecutionException, InterruptedException {
@@ -100,6 +134,8 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
             // 设置订单总价
             orderDetailVo.setTotalPrice(cartVoResponse.getData().getTotalAmount());
         }, executor).thenRunAsync(() -> {
+            // 在异步线程中设置新的请求信息，内部使用ThreadLocal进行维护
+            RequestContextHolder.setRequestAttributes(requestAttributes);
             List<OrderItemVo> orderItemVoList = orderDetailVo.getOrderItemVoList();
             List<Long> skuIdList = orderItemVoList.stream().map(OrderItemVo::getSkuId).collect(Collectors.toList());
             Response<List<StockVo>> stockResponse = warehouseServiceFeign.HasStockBySkuId(skuIdList);
@@ -132,7 +168,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                 "    return 0\n" +
                 "end";
         // 0 - failure, 1 - success，原子判断
-        Long executed = redisTemplate.execute(new DefaultRedisScript<>(script, Long.class), Collections.singletonList(RedisKey.USER_ORDER_TOKEN_PREFiX + userId), orderToken);
+        Long executed = redisTemplate.execute(new DefaultRedisScript<>(script, Long.class), Collections.singletonList(RedisKey.USER_ORDER_TOKEN_PREFiX + claim), orderToken);
         if (null != executed && executed == 1L) {
             // 创建订单
             OrderCreationTo order = createOrder();
@@ -150,18 +186,25 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                 orderItemVo.setSkuId(item.getSkuId());
                 orderItemVo.setCount(item.getSkuQuantity());
                 orderItemVo.setTitle(item.getSkuName());
+                orderItemVo.setSkuAttr(new ArrayList<>());
+                orderItemVo.setImage("");
+                orderItemVo.setPrice(BigDecimal.valueOf(0));
+                orderItemVo.setTotalPrice(BigDecimal.valueOf(0));
                 return orderItemVo;
             }).collect(Collectors.toList());
             stockLockVo.setOrderItemVoList(orderItemVoList);
             Response<List<StockLockResVo>> response = warehouseServiceFeign.lockStock(stockLockVo);
-            if (response.getCode() == 200) {
+            if (0 == response.getCode()) {
                 orderSubmitResVo.setCode(200);
                 orderSubmitResVo.setOrder(order.getOrder());
             } else {
                 // 锁定失败
                 orderSubmitResVo.setCode(response.getCode());
             }
-            int i = 10 / 0;
+//            int i = 10 / 0;
+
+            // TODO 订单创建成功，发送定时取消订单消息
+            rabbitTemplate.convertAndSend(RabbitConfiguration.ORDER_EVENT_EXCHANGE, RabbitConfiguration.CREATE_ROUTING_KEY, order.getOrder());
         } else {
             orderSubmitResVo.setCode(BizStatusCode.ORDER_NOT_EXIST.getCode());
         }
@@ -169,11 +212,11 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     }
 
     private void saveOrder(OrderCreationTo order) {
-        OmsOrder omsOrder = order.getOrder();
-        omsOrder.setModifyTime(LocalDateTime.now());
-        save(omsOrder);
+        OrderEntity orderEntity = order.getOrder();
+        orderEntity.setModifyTime(LocalDateTime.now());
+        save(orderEntity);
 
-        List<OmsOrderItem> orderItemList = order.getOrderItemList();
+        List<OrderItemEntity> orderItemList = order.getOrderItemList();
         orderItemService.saveBatch(orderItemList);
     }
 
@@ -183,7 +226,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 
         // 订单号
         String orderSn = IdWorker.getTimeId();
-        OmsOrder entity = new OmsOrder();
+        OrderEntity entity = new OrderEntity();
         entity.setMemberId(Long.valueOf(OrderInterceptor.THREAD_LOCAL_ORDER.get().split("_")[0]));
         entity.setOrderSn(orderSn);
 
@@ -199,7 +242,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         entity.setReceiverRegion(addressVo.getDistrict());
 
         // 获取所有订单项信息
-        List<OmsOrderItem> orderItemList = buildOrderItems(orderSn);
+        List<OrderItemEntity> orderItemList = buildOrderItems(orderSn);
 
         // 订单价格
         assert orderItemList != null;
@@ -216,13 +259,13 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         return orderCreationTo;
     }
 
-    private void computePrice(OmsOrder order, List<OmsOrderItem> orderItemList) {
+    private void computePrice(OrderEntity order, List<OrderItemEntity> orderItemList) {
         BigDecimal actual = new BigDecimal("0.0");
         BigDecimal coupon = new BigDecimal("0.0");
         BigDecimal promotion = new BigDecimal("0.0");
         BigDecimal integral = new BigDecimal("0.0");
 
-        for (OmsOrderItem orderItem: orderItemList) {
+        for (OrderItemEntity orderItem: orderItemList) {
             actual = actual.add(orderItem.getRealAmount());
             coupon = coupon.add(orderItem.getCouponAmount());
             promotion = promotion.add(orderItem.getPromotionAmount());
@@ -238,12 +281,12 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     /**
      * 构建订单项数据
      */
-    private List<OmsOrderItem> buildOrderItems(String orderSn) {
+    private List<OrderItemEntity> buildOrderItems(String orderSn) {
         Response<CartVo> cartVoResponse = cartServiceFeign.queryCheckedItem();
         if (null != cartVoResponse && !cartVoResponse.getData().getCartItemList().isEmpty()) {
             List<CartItemVo> cartItemList = cartVoResponse.getData().getCartItemList();
             return cartItemList.stream().map(cartItemVo -> {
-                OmsOrderItem orderItem = new OmsOrderItem();
+                OrderItemEntity orderItem = new OrderItemEntity();
 
                 // spu信息
                 Response<SpuInfoVo> spuInfoVoResponse = productServiceFeign.querySpuInfoBySkuId(cartItemVo.getSkuId());

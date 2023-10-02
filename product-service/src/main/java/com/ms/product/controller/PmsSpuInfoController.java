@@ -9,7 +9,6 @@ import com.ms.product.domain.vo.SaveSpuVo;
 import com.ms.product.service.impl.PmsSpuInfoServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.simpleframework.xml.Path;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

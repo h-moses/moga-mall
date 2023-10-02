@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ms.warehouse.mapper.WmsWareSkuMapper">
+
     <update id="lockStock">
         update wms_ware_sku set stock_locked=stock_locked+#{quantity}
         where sku_id=#{skuId} and ware_id=#{wareId} and stock-wms_ware_sku.stock_locked>=#{quantity}
+    </update>
+
+    <update id="releaseStock">
+        update wms_ware_sku set stock_locked=stock_locked-#{skuNum}
+        where sku_id=#{skuId} and ware_id=#{wareId}
     </update>
 
     <select id="getStock" resultType="java.lang.Long">

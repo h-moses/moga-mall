@@ -3,12 +3,13 @@ package com.ms.order.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("oms_order_operate_history")
-@ApiModel(value = "OmsOrderOperateHistory对象", description = "订单操作历史记录")
+@ApiModel(description = "订单操作历史记录")
 public class OmsOrderOperateHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

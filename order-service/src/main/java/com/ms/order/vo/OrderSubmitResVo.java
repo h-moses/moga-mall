@@ -1,6 +1,6 @@
 package com.ms.order.vo;
 
-import com.ms.order.entity.OmsOrder;
+import com.ms.order.entity.OrderEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,6 +11,6 @@ public class OrderSubmitResVo {
     @ApiModelProperty(value = "业务状态码")
     Integer code;
 
-    OmsOrder order;
+    OrderEntity order;
 
 }

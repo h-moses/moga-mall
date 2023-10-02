@@ -41,6 +41,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         String realToken = token.replace(AuthConstant.JWT_PREFIX, "");
         if (JwtUtils.validateToken(realToken)) {
             String claim = JwtUtils.getSubjectFromToken(realToken);
+            log.info("登录用户信息：{}", claim);
             // token合法，从中取出用户信息，交由用户服务
             exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, claim);
             return chain.filter(exchange);

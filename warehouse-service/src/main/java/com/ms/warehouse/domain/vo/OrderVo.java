@@ -1,34 +1,19 @@
-package com.ms.order.entity;
+package com.ms.warehouse.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-/**
- * <p>
- * 订单
- * </p>
- *
- * @author ms
- * @since 2023-09-07
- */
-@Getter
-@Setter
-@TableName("oms_order")
-@ApiModel(description = "订单")
-public class OmsOrder implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+@Data
+public class OrderVo implements Serializable {
+
+    private static final long serialVersionUID = 21997522369888487L;
 
     @ApiModelProperty("id")
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty("member_id")
@@ -153,6 +138,4 @@ public class OmsOrder implements Serializable {
 
     @ApiModelProperty("修改时间")
     private LocalDateTime modifyTime;
-
-
 }

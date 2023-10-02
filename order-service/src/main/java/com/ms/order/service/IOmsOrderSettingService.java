@@ -1,7 +1,7 @@
 package com.ms.order.service;
 
-import com.ms.order.entity.OmsOrderSetting;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.order.entity.OmsOrderSetting;
 
 /**
  * <p>

@@ -3,14 +3,12 @@ package com.ms.user.controller;
 
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
-import com.ms.user.domain.entity.User;
 import com.ms.user.domain.vo.UserAddressVo;
 import com.ms.user.service.IUmsDeliveryAddressService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

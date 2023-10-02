@@ -1,5 +1,6 @@
 package com.ms.warehouse.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ms.warehouse.domain.entity.WmsWareOrderTask;
 import com.ms.warehouse.mapper.WmsWareOrderTaskMapper;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class WmsWareOrderTaskServiceImpl extends ServiceImpl<WmsWareOrderTaskMapper, WmsWareOrderTask> implements IWmsWareOrderTaskService {
 
+    @Override
+    public WmsWareOrderTask queryTaskByOrderSn(String orderSn) {
+        return getOne(new LambdaQueryWrapper<WmsWareOrderTask>().eq(WmsWareOrderTask::getOrderSn,orderSn));
+    }
 }

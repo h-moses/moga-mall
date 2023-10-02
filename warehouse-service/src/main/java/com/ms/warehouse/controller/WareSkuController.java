@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.api.Response;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.common.exception.BizException;
-import com.ms.warehouse.domain.entity.WmsWareSku;
+import com.ms.warehouse.domain.entity.WareSkuEntity;
 import com.ms.warehouse.domain.vo.StockLockResVo;
 import com.ms.warehouse.domain.vo.StockLockVo;
 import com.ms.warehouse.domain.vo.StockVo;
@@ -29,7 +29,7 @@ import java.util.List;
 @Api(value = "商品库存")
 @RestController
 @RequestMapping("/warehouse/sku")
-public class WmsWareSkuController {
+public class WareSkuController {
 
     @Resource
     WmsWareSkuServiceImpl wareSkuService;
@@ -44,11 +44,11 @@ public class WmsWareSkuController {
      * @return
      */
     @GetMapping("/stock-detail")
-    public Response<Page<WmsWareSku>> pageQuery(@RequestParam("skuId") Long skuId,
-                              @RequestParam("wareId") Long wareId,
-                              @RequestParam("pageNum") Integer pageNum,
-                              @RequestParam("pageSize") Integer pageSize) {
-        Page<WmsWareSku> wmsWareSkuPage = wareSkuService.queryPage(skuId, wareId, pageNum, pageSize);
+    public Response<Page<WareSkuEntity>> pageQuery(@RequestParam("skuId") Long skuId,
+                                                   @RequestParam("wareId") Long wareId,
+                                                   @RequestParam("pageNum") Integer pageNum,
+                                                   @RequestParam("pageSize") Integer pageSize) {
+        Page<WareSkuEntity> wmsWareSkuPage = wareSkuService.queryPage(skuId, wareId, pageNum, pageSize);
         return Response.SUCCESS(wmsWareSkuPage);
     }
 
