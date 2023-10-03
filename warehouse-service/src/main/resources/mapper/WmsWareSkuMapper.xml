@@ -2,11 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ms.warehouse.mapper.WmsWareSkuMapper">
 
+    <!-- 支付完成，正式扣减商品库存 -->
+    <update id="deductStock">
+        update wms_ware_sku set stock_locked=stock_locked-#{skuNum}, stock=stock-#{skuNum}
+        where sku_id=#{skuId} and ware_id=#{wareId}
+    </update>
+
+    <!-- 锁定库存 -->
     <update id="lockStock">
         update wms_ware_sku set stock_locked=stock_locked+#{quantity}
         where sku_id=#{skuId} and ware_id=#{wareId} and stock-wms_ware_sku.stock_locked>=#{quantity}
     </update>
 
+    <!-- 未支付前，订单解锁，释放预扣减的库存 -->
     <update id="releaseStock">
         update wms_ware_sku set stock_locked=stock_locked-#{skuNum}
         where sku_id=#{skuId} and ware_id=#{wareId}

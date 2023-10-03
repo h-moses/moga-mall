@@ -23,7 +23,8 @@ public class OrderInterceptor implements HandlerInterceptor {
             "/webjars/js/*",
             "/error",
             "/swagger-resources",
-            "/order/info/*"
+            "/order/info/*",
+            "/order/pay/**"
     };
 
     private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();

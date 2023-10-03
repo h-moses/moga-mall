@@ -69,4 +69,13 @@ public class WareSkuController {
             return Response.ERROR(BizStatusCode.INSUFFICIENT_STOCK);
         }
     }
+
+    @ApiOperation(value = "扣减库存")
+    @GetMapping("/stock/deduction")
+    public Response deduction(@RequestParam("orderSn") String orderSn) {
+        wareSkuService.deductStock(orderSn);
+
+        return Response.SUCCESS(BizStatusCode.SUCCESS);
+    }
+
 }

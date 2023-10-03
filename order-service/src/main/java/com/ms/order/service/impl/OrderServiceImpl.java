@@ -1,8 +1,11 @@
 package com.ms.order.service.impl;
 
+import com.alipay.easysdk.factory.Factory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.ms.common.api.Response;
 import com.ms.common.constant.RedisKey;
 import com.ms.common.enums.BizStatusCode;
@@ -22,6 +25,7 @@ import com.ms.order.service.IOmsOrderItemService;
 import com.ms.order.service.IOrderService;
 import com.ms.order.to.OrderCreationTo;
 import com.ms.order.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -32,7 +36,10 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -40,6 +47,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * <p>
@@ -49,6 +58,7 @@ import java.util.stream.Collectors;
  * @author ms
  * @since 2023-09-07
  */
+@Slf4j
 @Service
 public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> implements IOrderService {
 
@@ -106,6 +116,74 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
                 // 保证可靠消息
 
             }
+        }
+    }
+
+    @Override
+    public PayVo queryPayInfoByOrderSn(String orderSn) {
+        PayVo payVo = new PayVo();
+        OrderEntity orderEntity = queryOrderStatus(orderSn);
+
+        BigDecimal payAmount = orderEntity.getTotalAmount().setScale(2, RoundingMode.UP);
+        payVo.setTotalAmount(String.valueOf(payAmount));
+        payVo.setOutTradeNo(orderEntity.getOrderSn());
+
+        List<OrderItemEntity> itemEntityList = orderItemService.list(new LambdaQueryWrapper<OrderItemEntity>().eq(OrderItemEntity::getOrderSn, orderSn));
+        payVo.setSubject(itemEntityList.get(0).getSkuName());
+
+        return payVo;
+    }
+
+    @Override
+    public String handlePayResult(Map<String, String> parameters) {
+        log.info("parameters: " + parameters.toString());
+
+        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
+        try {
+            //商户订单号
+            String out_trade_no = new String(parameters.get("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            //交易状态
+            String trade_status = new String(parameters.get("trade_status").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+            //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+            //计算得出通知验证结果
+            //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
+            Boolean verify_result = Factory.Payment.Common().verifyNotify(parameters);
+
+            if(verify_result){//验证成功
+                //////////////////////////////////////////////////////////////////////////////////////////
+                //请在这里加上商户的业务逻辑程序代码
+
+                //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+
+                if(("TRADE_FINISHED").equals(trade_status) || "TRADE_SUCCESS".equals(trade_status)){
+                    //判断该笔订单是否在商户网站中已经做过处理
+                    //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+                    //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+                    //如果有做过处理，不执行商户的业务程序
+
+                    // 修改订单状态
+                    log.info("编号为{}的订单支付成功，正在修改订单状态", out_trade_no);
+                    OrderEntity orderEntity = queryOrderStatus(out_trade_no);
+                    orderEntity.setStatus(OrderStatus.PAID.getCode());
+                    updateById(orderEntity);
+                    // 扣减商品库存
+                    log.info("编号为{}的订单状态修改成功，正在扣减商品库存", out_trade_no);
+                    warehouseServiceFeign.deduction(out_trade_no);
+                    //注意：
+                    //如果签约的是可退款协议，退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+                    //如果没有签约可退款协议，那么付款完成后，支付宝系统发送该交易状态通知。
+
+                    log.info("编号为{}的订单处理完成", out_trade_no);
+                }
+                return "success";
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+            }else{//验证失败
+                return "fail";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

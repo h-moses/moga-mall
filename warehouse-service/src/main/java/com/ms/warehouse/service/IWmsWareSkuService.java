@@ -32,4 +32,6 @@ public interface IWmsWareSkuService extends IService<WareSkuEntity> {
     void releaseStock(StockLockTo stockLockTo, Message message, Channel channel) throws IOException;
 
     void releaseStockOnOrderClosed(OrderTo orderTo, Message message);
+
+    void deductStock(String orderSn);
 }

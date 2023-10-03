@@ -25,4 +25,6 @@ public interface WmsWareSkuMapper extends BaseMapper<WareSkuEntity> {
     Integer lockStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("quantity") Integer quantity);
 
     void releaseStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("skuNum") Integer skuNum);
+
+    void deductStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("skuNum") Integer skuNum);
 }

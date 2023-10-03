@@ -22,7 +22,8 @@ public class WarehouseInterceptor implements HandlerInterceptor {
             "/webjars/css/*",
             "/webjars/js/*",
             "/error",
-            "/swagger-resources"
+            "/swagger-resources",
+            "/warehouse/sku/stock/deduction"
     };
 
     private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();

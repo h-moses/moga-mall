@@ -207,6 +207,33 @@ public class WmsWareSkuServiceImpl extends ServiceImpl<WmsWareSkuMapper, WareSku
     }
 
     /**
+     * 支付成功，扣减相应库存
+     * @param orderSn 订单编号
+     */
+    @Transactional
+    @Override
+    public void deductStock(String orderSn) {
+        // 根据订单编号，找到工作单
+        WmsWareOrderTask orderTask = orderTaskService.queryTaskByOrderSn(orderSn);
+
+        // 根据工作单id，找到工作单细则
+        List<WareOrderTaskDetailEntity> detailList = orderTaskDetailService.list(new LambdaQueryWrapper<WareOrderTaskDetailEntity>().eq(WareOrderTaskDetailEntity::getTaskId, orderTask.getId()));
+
+        // 根据细则，先检查工作单状态，扣除商品在特定仓库的库存, 并修改状态
+        for (WareOrderTaskDetailEntity taskDetail : detailList) {
+            if (1 == taskDetail.getLockStatus()) {
+                // 扣减库存
+                getBaseMapper().deductStock(taskDetail.getSkuId(), taskDetail.getWareId(), taskDetail.getSkuNum());
+                // 修改库存状态
+                taskDetail.setLockStatus(3);
+                orderTaskDetailService.updateById(taskDetail);
+            } else {
+                throw new BizException(BizStatusCode.GOODS_INVALID.getCode(), "编号：" +  taskDetail.getSkuId() + "的商品库存未处于锁定状态");
+            }
+        }
+    }
+
+    /**
      * 因订单关闭导致的库存解锁
      */
     @RabbitHandler

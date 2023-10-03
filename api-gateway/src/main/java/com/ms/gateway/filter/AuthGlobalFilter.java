@@ -23,7 +23,9 @@ public class AuthGlobalFilter implements GlobalFilter {
     private static final List<String> IGNORE_URLS = ImmutableList.of(
             "/user/register",
             "/user/login",
-            "/category/treelist"
+            "/category/treelist",
+            "/order/pay",
+            "/order/pay/notify"
     );
 
     @Override

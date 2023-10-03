@@ -2,10 +2,10 @@ package com.ms.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ms.order.entity.OrderEntity;
-import com.ms.order.vo.OrderDetailVo;
-import com.ms.order.vo.OrderSubmitResVo;
-import com.ms.order.vo.OrderSubmitVo;
+import com.ms.order.vo.*;
+import org.springframework.http.HttpRequest;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -25,4 +25,8 @@ public interface IOrderService extends IService<OrderEntity> {
     OrderEntity queryOrderStatus(String orderSn);
 
     void closeOrder(OrderEntity order);
+
+    PayVo queryPayInfoByOrderSn(String orderSn);
+
+    String handlePayResult(Map<String, String> parameters) throws IllegalAccessException;
 }

@@ -1,18 +1,21 @@
 package com.ms.order.controller;
 
 
+import com.alipay.easysdk.factory.Factory;
+import com.alipay.easysdk.kms.aliyun.credentials.http.HttpRequest;
+import com.alipay.easysdk.payment.wap.models.AlipayTradeWapPayResponse;
 import com.ms.common.api.Response;
 import com.ms.order.entity.OrderEntity;
 import com.ms.order.service.IOrderService;
-import com.ms.order.vo.OrderDetailVo;
-import com.ms.order.vo.OrderSubmitResVo;
-import com.ms.order.vo.OrderSubmitVo;
+import com.ms.order.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -23,6 +26,7 @@ import java.util.concurrent.ExecutionException;
  * @author ms
  * @since 2023-09-07
  */
+@Slf4j
 @Api(tags = "订单接口")
 @RestController
 @RequestMapping("/order")
@@ -60,5 +64,31 @@ public class OrderController {
     @GetMapping("/info/{orderSn}")
     public Response<OrderEntity> queryOrderInfo(@PathVariable("orderSn") String orderSn) {
        return Response.SUCCESS(orderService.queryOrderStatus(orderSn));
+    }
+
+    /**
+     * TODO 跳转到支付结果页（订单列表页）
+     * @param orderSn
+     * @return
+     */
+    @ApiOperation(value = "支付订单")
+    @GetMapping(value = "/pay", produces = "text/html")
+    public String payOrder(@RequestParam("orderSn") String orderSn) {
+        PayVo payVo = orderService.queryPayInfoByOrderSn(orderSn);
+
+        AlipayTradeWapPayResponse response;
+        try {
+            response = Factory.Payment.Wap().pay(payVo.getSubject(), payVo.getOutTradeNo(), payVo.getTotalAmount(), "","");
+        } catch (Exception e) {
+            log.error("支付宝付款调用失败，原因：" + e.getMessage());
+            throw new RuntimeException("网络异常,请刷新后重试");
+        }
+        return response.getBody();
+    }
+
+    @ApiOperation(value = "支付结果异步通知")
+    @PostMapping(value = "/pay/notify")
+    public String notifyPayResult(@RequestParam Map<String, String> parameters) throws IllegalAccessException {
+        return orderService.handlePayResult(parameters);
     }
 }

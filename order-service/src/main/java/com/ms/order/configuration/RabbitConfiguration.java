@@ -25,7 +25,7 @@ public class RabbitConfiguration {
 
     public static final String CREATE_ROUTING_KEY = "order.event.create";
 
-    public static final Integer MESSAGE_TIME_OUT = 60000;
+    public static final Integer MESSAGE_TIME_OUT = 600000;
 
     @Bean
     public TopicExchange orderEventExchange() {
