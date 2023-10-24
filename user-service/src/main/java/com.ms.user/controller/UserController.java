@@ -57,7 +57,8 @@ public class UserController {
 
     @ApiOperation(value = "个人信息查询接口")
     @GetMapping("/info")
-    public Response<Object> queryInfo(@RequestHeader(AuthConstant.USER_HEADER) String username) {
-        return Response.SUCCESS(userService.queryInfo(username));
+    public Response<Object> queryInfo(@RequestHeader(AuthConstant.USER_HEADER) String claim) {
+        int i = 10 / 0;
+        return Response.SUCCESS(userService.queryInfo(claim.split("_")[1]));
     }
 }

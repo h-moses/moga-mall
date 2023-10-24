@@ -1,0 +1,42 @@
+server:
+  port: 8007
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/moga_mall_sms?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
+    druid:
+      min-idle: 1
+      max-wait: -1
+      validation-query: SELECT 1
+    username: root
+    password: 802324
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+#        namespace: 4cea06b9-f119-48d0-8fa4-d79a17d21377
+  devtools:
+    livereload:
+      port: 35735
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+  rabbitmq:
+    username: admin
+    password: admin
+    listener:
+      simple:
+        acknowledge-mode: manual
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"

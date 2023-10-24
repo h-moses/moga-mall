@@ -134,6 +134,7 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         return payVo;
     }
 
+    @Transactional
     @Override
     public String handlePayResult(Map<String, String> parameters) {
         log.info("parameters: " + parameters.toString());
@@ -238,7 +239,6 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         submitVoThreadLocal.set(orderVo);
         OrderSubmitResVo orderSubmitResVo = new OrderSubmitResVo();
         String claim = OrderInterceptor.THREAD_LOCAL_ORDER.get();
-        long userId = Long.parseLong(claim.split("_")[0]);
         String orderToken = orderVo.getOrderToken();
         String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1] then\n" +
                 "    return redis.call(\"del\",KEYS[1])\n" +
