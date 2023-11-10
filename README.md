@@ -28,8 +28,7 @@
 - Redis：缓存数据。
 - Elasticsearch：搜索和分析数据。
 - RabbitMQ：实现消息队列。
-- Alipay、WeChat Pay：实现支付功能。
-- Express API：提供物流信息查询接口。
+- Alipay Pay：实现支付功能。
 - JWT：实现用户认证和授权。
 - Spring Security：提供安全框架。
 - OAuth2：实现第三方登录和授权。
