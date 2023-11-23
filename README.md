@@ -13,9 +13,7 @@
 ├── payment-service  # 支付服务
 ├── product-service  # 商品服务
 ├── user-service  # 用户服务
-├── cart-service  # 购物车服务
-├── logistics-service  # 物流服务
-└── comment-service  # 评论服务
+└── cart-service  # 购物车服务
 ```
 
 ## 技术选型
@@ -31,9 +29,8 @@
 - Alipay Pay：实现支付功能。
 - JWT：实现用户认证和授权。
 - Spring Security：提供安全框架。
-- OAuth2：实现第三方登录和授权。
 - HTTPS：提供安全传输协议。
-- Docker、Kubernetes：实现容器化部署和管理。
+- Docker：实现容器化部署和管理。
 
 ## 数据库设计
 
@@ -352,12 +349,7 @@
    - 商品查询接口：/api/product/search
    - 商品详情查询接口：/api/product/detail
    - 商品分类查询接口：/api/product/category
-   - 商品推荐接口：/api/product/recommend
    - 商品搜索接口：/api/product/search
-   - 商品评价查询接口：/api/product/comment
-   - 商品评价回复接口：/api/product/comment-reply
-   - 商品收藏接口：/api/product/favorite
-   - 商品分享接口：/api/product/share
    - 商品秒杀接口：/api/product/seckill
    - 商品促销接口：/api/product/promotion
    - 商品库存管理接口：/api/product/stock
@@ -368,7 +360,6 @@
    - 订单查询接口：/api/order/query
    - 订单退款接口：/api/order/refund
    - 订单确认接口：/api/order/confirm
-   - 订单评价接口：/api/order/comment
    - 物流信息查询接口：/api/order/logistics
    - 订单退货接口：/api/order/return
    - 订单提醒发货接口：/api/order/remind-ship
@@ -384,16 +375,11 @@
    - 购物车结算接口：/api/cart/settle
    - 购物车商品数量查询接口：/api/cart/quantity
    - 购物车商品优惠接口：/api/cart/discount
-   - 购物车商品推荐接口：/api/cart/recommend
-   - 购物车商品比较接口：/api/cart/compare
 5. 支付服务
    - 支付宝支付接口：/api/pay/alipay
-   - 微信支付接口：/api/pay/wechatpay
    - 支付状态查询接口：/api/pay/query
    - 支付宝支付退款接口：/api/pay/alipay-refund
-   - 微信支付退款接口：/api/pay/wechatpay-refund
    - 支付宝支付异步通知接口：/api/pay/alipay-notify
-   - 微信支付异步通知接口：/api/pay/wechatpay-notify
 6. 物流服务
    - 物流信息查询接口：/api/logistics/query
    - 订单发货接口：/api/logistics/ship
@@ -402,14 +388,6 @@
    - 物流信息删除接口：/api/logistics/delete
    - 物流信息批量查询接口：/api/logistics/batch-query
    - 物流信息推送接口：/api/logistics/push
-7. 评论服务
-   - 商品评论添加接口：/api/comment/add
-   - 商品评论删除接口：/api/comment/delete
-   - 商品评论修改接口：/api/comment/update
-   - 商品评论查询接口：/api/comment/query
-   - 商品评论回复接口：/api/comment/reply
-   - 商品评论点赞接口：/api/comment/like
-   - 商品评论举报接口：/api/comment/report
 
 以上是本项目提供的所有功能和接口。
 
@@ -509,46 +487,16 @@
 
 - parentId：父级分类ID，整型，选填
 
-4. 商品推荐接口（/api/product/recommend）
-
-- pageNum：页码，整型，选填
-- pageSize：每页数量，整型，选填
-
-5. 商品搜索接口（/api/product/search）
-
-- keyword：关键字，字符串类型，必填
-- pageNum：页码，整型，选填
-- pageSize：每页数量，整型，选填
-
-6. 商品评价查询接口（/api/product/comment）
-
-- productId：商品ID，整型，必填
-- pageNum：页码，整型，选填
-- pageSize：每页数量，整型，选填
-
-7. 商品评价回复接口（/api/product/comment-reply）
-
-- commentId：评价ID，整型，必填
-- content：回复内容，字符串类型，必填
-
-8. 商品收藏接口（/api/product/favorite）
-
-- productId：商品ID，整型，必填
-
-9. 商品分享接口（/api/product/share）
-
-- productId：商品ID，整型，必填
-
-10. 商品秒杀接口（/api/product/seckill）
+4. 商品秒杀接口（/api/product/seckill）
 
 - productId：商品ID，整型，必填
 - userId：用户ID，整型，必填
 
-11. 商品促销接口（/api/product/promotion）
+5. 商品促销接口（/api/product/promotion）
 
 - productId：商品ID，整型，必填
 
-12. 商品库存管理接口（/api/product/stock）
+6. 商品库存管理接口（/api/product/stock）
 
 - productId：商品ID，整型，必填
 - stock：库存数量，整型，必填
@@ -586,13 +534,6 @@
 6. 订单确认接口（/api/order/confirm）
 
 - orderId：订单ID，整型，必填
-
-7. 订单评价接口（/api/order/comment）
-
-- orderId：订单ID，整型，必填
-- productId：商品ID，整型，必填
-- content：评价内容，字符串类型，必填
-- images：评价图片，文件类型，选填
 
 8. 物流信息查询接口（/api/order/logistics）
 
@@ -663,23 +604,9 @@
 - userId：用户ID，整型，必填
 - productId：商品ID，整型，必填
 
-9. 购物车商品推荐接口（/api/cart/recommend）
-
-- userId：用户ID，整型，必填
-
-10. 购物车商品比较接口（/api/cart/compare）
-
-- userId：用户ID，整型，必填
-- productIds：商品ID列表，数组类型，必填
-
 ### 支付服务
 
 1. 支付宝支付接口（/api/pay/alipay）
-
-- orderId：订单ID，整型，必填
-- paymentAmount：支付金额，浮点型，必填
-
-2. 微信支付接口（/api/pay/wechatpay）
 
 - orderId：订单ID，整型，必填
 - paymentAmount：支付金额，浮点型，必填
@@ -693,18 +620,9 @@
 - orderId：订单ID，整型，必填
 - refundAmount：退款金额，浮点型，必填
 
-5. 微信支付退款接口（/api/pay/wechatpay-refund）
-
-- orderId：订单ID，整型，必填
-- refundAmount：退款金额，浮点型，必填
-
 6. 支付宝支付异步通知接口（/api/pay/alipay-notify）
 
 - 无需参数，支付宝会将异步通知发送到该接口
-
-7. 微信支付异步通知接口（/api/pay/wechatpay-notify）
-
-- 无需参数，微信会将异步通知发送到该接口
 
 ### 物流服务
 
@@ -743,44 +661,6 @@
 - logisticsId：物流ID，整型，必填
 - pushContent：推送内容，字符串类型，必填
 
-### 评论服务
-
-1. 商品评论添加接口（/api/comment/add）
-
-- userId：用户ID，整型，必填
-- productId：商品ID，整型，必填
-- content：评论内容，字符串类型，必填
-
-2. 商品评论删除接口（/api/comment/delete）
-
-- commentId：评论ID，整型，必填
-
-3. 商品评论修改接口（/api/comment/update）
-
-- commentId：评论ID，整型，必填
-- content：评论内容，字符串类型，必填
-
-4. 商品评论查询接口（/api/comment/query）
-
-- productId：商品ID，整型，必填
-
-5. 商品评论回复接口（/api/comment/reply）
-
-- commentId：评论ID，整型，必填
-- userId：用户ID，整型，必填
-- content：回复内容，字符串类型，必填
-
-6. 商品评论点赞接口（/api/comment/like）
-
-- commentId：评论ID，整型，必填
-- userId：用户ID，整型，必填
-
-7. 商品评论举报接口（/api/comment/report）
-
-- commentId：评论ID，整型，必填
-- userId：用户ID，整型，必填
-- reason：举报原因，字符串类型，必填
-
 ## 总结
 
-本项目实现了一个基于微服务架构的电商平台，提供了用户注册、登录、商品查询、购物车、订单、支付、物流、评论等功能。通过智能助理，用户可以通过语音交互方式与平台进行交互，提高了购物体验的便捷性。同时，本项目采用了多种技术和工具，如Spring Boot、Spring Cloud Alibaba、MySQL、Redis、Elasticsearch、RabbitMQ、Alipay、WeChat Pay、JWT、Docker和Kubernetes等，实现了一个高可用、高性能、高安全性的电商平台。
+本项目实现了一个基于微服务架构的电商平台，提供了用户注册、登录、商品查询、购物车、订单、支付等功能。同时，本项目采用了多种技术和工具，如Spring Boot、Spring Cloud Alibaba、MySQL、Redis、Elasticsearch、RabbitMQ、Alipay、JWT、Docker等。
