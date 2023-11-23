@@ -660,7 +660,3 @@
 
 - logisticsId：物流ID，整型，必填
 - pushContent：推送内容，字符串类型，必填
-
-## 总结
-
-本项目实现了一个基于微服务架构的电商平台，提供了用户注册、登录、商品查询、购物车、订单、支付等功能。同时，本项目采用了多种技术和工具，如Spring Boot、Spring Cloud Alibaba、MySQL、Redis、Elasticsearch、RabbitMQ、Alipay、JWT、Docker等。
