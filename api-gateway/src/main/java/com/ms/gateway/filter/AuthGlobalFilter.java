@@ -25,7 +25,8 @@ public class AuthGlobalFilter implements GlobalFilter {
             "/user/login",
             "/category/treelist",
             "/order/pay",
-            "/order/pay/notify"
+            "/order/pay/notify",
+            "/seckill/all"
     );
 
     @Override

@@ -10,7 +10,9 @@ import com.ms.common.api.Response;
 import com.ms.common.constant.RedisKey;
 import com.ms.common.enums.BizStatusCode;
 import com.ms.common.enums.OrderStatus;
+import com.ms.common.exception.BizException;
 import com.ms.common.to.OrderTo;
+import com.ms.common.to.SeckillOrderTo;
 import com.ms.common.utils.BeanUtils;
 import com.ms.order.configuration.RabbitConfiguration;
 import com.ms.order.entity.OrderEntity;
@@ -119,6 +121,11 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         }
     }
 
+    /**
+     * 获取订单支付信息
+     * @param orderSn
+     * @return
+     */
     @Override
     public PayVo queryPayInfoByOrderSn(String orderSn) {
         PayVo payVo = new PayVo();
@@ -134,6 +141,11 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         return payVo;
     }
 
+    /**
+     * 处理用户支付
+     * @param parameters
+     * @return
+     */
     @Transactional
     @Override
     public String handlePayResult(Map<String, String> parameters) {
@@ -188,6 +200,12 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         }
     }
 
+    /**
+     * 查询订单详细信息
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Override
     public OrderDetailVo queryOrderDetail() throws ExecutionException, InterruptedException {
         OrderDetailVo orderDetailVo = new OrderDetailVo();
@@ -232,6 +250,11 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         return orderDetailVo;
     }
 
+    /**
+     * 正式下单
+     * @param orderVo
+     * @return
+     */
 //    @GlobalTransactional
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -277,7 +300,7 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
                 orderSubmitResVo.setOrder(order.getOrder());
             } else {
                 // 锁定失败
-                orderSubmitResVo.setCode(response.getCode());
+                throw new BizException(BizStatusCode.ORDER_INVALID);
             }
 //            int i = 10 / 0;
 
@@ -289,6 +312,10 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         return orderSubmitResVo;
     }
 
+    /**
+     * 保存订单到数据库
+     * @param order
+     */
     private void saveOrder(OrderCreationTo order) {
         OrderEntity orderEntity = order.getOrder();
         orderEntity.setModifyTime(LocalDateTime.now());
@@ -298,6 +325,10 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         orderItemService.saveBatch(orderItemList);
     }
 
+    /**
+     * 创建订单的详细数据
+     * @return
+     */
     private OrderCreationTo createOrder() {
         OrderCreationTo orderCreationTo = new OrderCreationTo();
         OrderSubmitVo orderSubmitVo = submitVoThreadLocal.get();
@@ -337,6 +368,11 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         return orderCreationTo;
     }
 
+    /**
+     * 计算订单的价格
+     * @param order
+     * @param orderItemList
+     */
     private void computePrice(OrderEntity order, List<OrderItemEntity> orderItemList) {
         BigDecimal actual = new BigDecimal("0.0");
         BigDecimal coupon = new BigDecimal("0.0");
@@ -403,5 +439,24 @@ public class OrderServiceImpl extends ServiceImpl<OmsOrderMapper, OrderEntity> i
         }
 
         return null;
+    }
+
+
+    /**
+     * 创建秒杀订单
+     * @param seckillOrderTo
+     */
+    @Override
+    public void createSeckillOrder(SeckillOrderTo seckillOrderTo) {
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderSn(seckillOrderTo.getOrderSn());
+        orderEntity.setMemberId(Long.valueOf(seckillOrderTo.getUserId()));
+        orderEntity.setStatus(OrderStatus.CREATED.getCode());
+
+        orderEntity.setPayAmount(seckillOrderTo.getSeckillPrice().multiply(BigDecimal.valueOf(seckillOrderTo.getCount())));
+
+        save(orderEntity);
+
+        // TODO 保存订单项信息
     }
 }

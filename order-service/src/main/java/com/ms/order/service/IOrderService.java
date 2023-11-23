@@ -1,6 +1,7 @@
 package com.ms.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ms.common.to.SeckillOrderTo;
 import com.ms.order.entity.OrderEntity;
 import com.ms.order.vo.*;
 import org.springframework.http.HttpRequest;
@@ -29,4 +30,6 @@ public interface IOrderService extends IService<OrderEntity> {
     PayVo queryPayInfoByOrderSn(String orderSn);
 
     String handlePayResult(Map<String, String> parameters) throws IllegalAccessException;
+
+    void createSeckillOrder(SeckillOrderTo seckillOrderTo);
 }

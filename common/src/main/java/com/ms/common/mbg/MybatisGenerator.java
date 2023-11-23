@@ -9,9 +9,9 @@ import java.util.List;
 
 public class MybatisGenerator {
 
-    private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/moga_mall_ums?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false";
+    private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/moga_mall_sms?useUnicode=true&&chatacterEncoding=utf-8&&useSSL=false";
 
-    private static final String OUTPUT_DIR = "D:\\WorkStationJava\\在线商城\\moga-mall\\user-service\\src\\main\\java";
+    private static final String OUTPUT_DIR = "D:\\WorkStationJava\\在线商城\\moga-mall\\seckill-service\\src\\main\\java";
 
     private static final String USERNAME = "root";
 

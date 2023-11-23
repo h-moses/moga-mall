@@ -61,6 +61,13 @@ spring:
             - Path=/api/category/**
           filters:
             - StripPrefix=1
+        - id: seckill-service
+          uri: lb://moga-seckill-service
+          order: 1
+          predicates:
+            - Path=/api/seckill/**
+          filters:
+            - StripPrefix=1
   devtools:
     livereload:
       port: 35734
