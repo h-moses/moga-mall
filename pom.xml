@@ -7,7 +7,6 @@
         <module>user-service</module>
         <module>common</module>
         <module>api-gateway</module>
-        <module>doc-service</module>
         <module>product-service</module>
         <module>warehouse-service</module>
         <module>search-service</module>
