@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @FeignClient("moga-product-service")
 public interface ProductFeign {
 
@@ -14,5 +16,5 @@ public interface ProductFeign {
     Response<SkuInfo> querySkuInfo(@RequestParam("skuId") Long skuId);
 
     @GetMapping("/product/sku/sale/info/{skuId}")
-    Response<String> querySkuSaleAttr(@PathVariable("skuId") Long skuId);
+    Response<List<String>> querySkuSaleAttr(@PathVariable("skuId") Long skuId);
 }

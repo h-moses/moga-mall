@@ -2,12 +2,16 @@ package com.ms.common.exception;
 
 import com.ms.common.api.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
+@Order(-1)
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BizException.class)
@@ -29,6 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response handleException(Exception e) {
         log.error("全局异常: {}", e.getMessage(), e);
         return new Response<>(-1, "系统异常，请稍后再试", null);

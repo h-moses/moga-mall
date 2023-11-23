@@ -11,10 +11,11 @@ public class TokenUtils {
 
     private static final long REFRESH_TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
 
-    public static TokenPair generateTokenPair(String username) {
-        String accessToken = JwtUtils.createToken(username, ACCESS_TOKEN_EXPIRATION);
+    public static TokenPair generateTokenPair(Long userId, String username) {
+        String claim = userId + "_" + username;
 
-        String refreshToken = JwtUtils.createToken(username, REFRESH_TOKEN_EXPIRATION);
+        String accessToken = JwtUtils.createToken(claim, ACCESS_TOKEN_EXPIRATION);
+        String refreshToken = JwtUtils.createToken(claim, REFRESH_TOKEN_EXPIRATION);
 
         TokenPair tokenPair = new TokenPair();
         tokenPair.setAccessToken(accessToken);

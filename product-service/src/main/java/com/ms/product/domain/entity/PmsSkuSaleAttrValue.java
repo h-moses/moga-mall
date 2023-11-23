@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName("pms_sku_sale_attr_value")
-@ApiModel(value = "PmsSkuSaleAttrValue对象", description = "sku销售属性&值")
+@ApiModel(description = "sku销售属性&值")
 public class PmsSkuSaleAttrValue implements Serializable {
 
     private static final long serialVersionUID = 1L;

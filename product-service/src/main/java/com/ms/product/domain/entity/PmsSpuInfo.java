@@ -23,7 +23,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("pms_spu_info")
-@ApiModel(value = "PmsSpuInfo对象", description = "spu信息")
+@ApiModel(description = "spu信息")
 public class PmsSpuInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,6 @@
 package com.ms.search.service;
 
-import com.ms.common.to.es.SkuEsModel;
+import com.ms.common.to.SkuEsModel;
 
 import java.io.IOException;
 import java.util.List;

@@ -66,15 +66,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @CachePut(value = "user", key = "#username")
     @Override
-    public Object login(String username, String password) throws BizException {
+    public UserInfoDto login(String username, String password) throws BizException {
         if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
             throw new BizException(BizExceptionCode.PARAM_ERROR.getCode(), "用户名或密码不允许为空");
         }
         User user = getByUserName(username);
         if (null == user) {
-            return BizStatusCode.USER_NOT_EXIST;
+            throw new BizException(BizStatusCode.USER_NOT_EXIST);
         } else if (!user.getPassword().equals(SecureUtil.md5(password))) {
-            return BizStatusCode.PASSWORD_INCORRECT;
+            throw new BizException(BizStatusCode.PASSWORD_INCORRECT);
         } else {
             UserInfoDto userInfoDto = new UserInfoDto();
             BeanUtils.copyProperties(user, userInfoDto);

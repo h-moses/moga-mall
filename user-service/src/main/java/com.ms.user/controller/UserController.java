@@ -3,7 +3,6 @@ package com.ms.user.controller;
 
 import com.ms.common.api.Response;
 import com.ms.common.constant.AuthConstant;
-import com.ms.common.enums.BizStatusCode;
 import com.ms.user.domain.dto.UserInfoDto;
 import com.ms.user.domain.entity.TokenPair;
 import com.ms.user.domain.vo.UpdateUserInfoParamVo;
@@ -45,11 +44,8 @@ public class UserController {
     @PostMapping("/login")
     public Response<TokenPair> login(@NotBlank @RequestParam("username") String username,
                                      @NotBlank @RequestParam("password") String password) {
-        Object res = userService.login(username, password);
-        if (res.getClass().isAssignableFrom(UserInfoDto.class)) {
-            return Response.SUCCESS(TokenUtils.generateTokenPair(((UserInfoDto) res).getUsername()));
-        }
-        return Response.SUCCESS((BizStatusCode) res);
+        UserInfoDto res = userService.login(username, password);
+        return Response.SUCCESS(TokenUtils.generateTokenPair(res.getId(), res.getUsername()));
     }
 
     @ApiOperation(value = "个人信息修改接口")
@@ -61,7 +57,8 @@ public class UserController {
 
     @ApiOperation(value = "个人信息查询接口")
     @GetMapping("/info")
-    public Response<Object> queryInfo(@RequestHeader(AuthConstant.USER_HEADER) String username) {
-        return Response.SUCCESS(userService.queryInfo(username));
+    public Response<Object> queryInfo(@RequestHeader(AuthConstant.USER_HEADER) String claim) {
+        int i = 10 / 0;
+        return Response.SUCCESS(userService.queryInfo(claim.split("_")[1]));
     }
 }

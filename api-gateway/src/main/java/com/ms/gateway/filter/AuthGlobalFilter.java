@@ -23,7 +23,10 @@ public class AuthGlobalFilter implements GlobalFilter {
     private static final List<String> IGNORE_URLS = ImmutableList.of(
             "/user/register",
             "/user/login",
-            "/category/treelist"
+            "/category/treelist",
+            "/order/pay",
+            "/order/pay/notify",
+            "/seckill/all"
     );
 
     @Override
@@ -32,6 +35,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         if (IGNORE_URLS.contains(path)) {
             return chain.filter(exchange);
         }
+        log.info("访问路径：{}", path);
         String token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_HEADER);
         if (!StringUtils.hasText(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -39,9 +43,10 @@ public class AuthGlobalFilter implements GlobalFilter {
         }
         String realToken = token.replace(AuthConstant.JWT_PREFIX, "");
         if (JwtUtils.validateToken(realToken)) {
-            String username = JwtUtils.getSubjectFromToken(realToken);
+            String claim = JwtUtils.getSubjectFromToken(realToken);
+            log.info("登录用户信息：{}", claim);
             // token合法，从中取出用户信息，交由用户服务
-            exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, username);
+            exchange.getRequest().mutate().header(AuthConstant.USER_HEADER, claim);
             return chain.filter(exchange);
         } else {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

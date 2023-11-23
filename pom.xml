@@ -13,6 +13,7 @@
         <module>search-service</module>
         <module>cart-service</module>
         <module>order-service</module>
+        <module>seckill-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

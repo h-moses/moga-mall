@@ -13,6 +13,6 @@ public class StockVo implements Serializable {
     @JsonProperty("skuId")
     private Long skuId;
 
-    @JsonProperty("isStocked")
-    private Boolean isStocked;
+    @JsonProperty("hasStock")
+    private Boolean hasStock;
 }

@@ -86,4 +86,18 @@ public class CartItem implements Serializable {
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "skuId=" + skuId +
+                ", checked=" + checked +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", skuAttr=" + skuAttr +
+                ", price=" + price +
+                ", count=" + count +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

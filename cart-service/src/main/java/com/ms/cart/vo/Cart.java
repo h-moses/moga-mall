@@ -21,6 +21,14 @@ public class Cart implements Serializable {
         this.cartItemList = cartItemList;
     }
 
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public Integer getProductCount() {
         if (null != cartItemList && !cartItemList.isEmpty()) {
             for (CartItem cartItem : cartItemList) {

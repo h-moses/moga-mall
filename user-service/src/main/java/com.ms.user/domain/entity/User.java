@@ -24,7 +24,7 @@ public class User implements Serializable {
 
     @ApiModelProperty("用户ID")
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("用户名")
     private String username;
